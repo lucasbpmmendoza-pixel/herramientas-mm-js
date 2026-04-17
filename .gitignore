@@ -1,0 +1,25 @@
+*.env
+*.env.local
+*.env.*.local
+
+node_modules/
+.next/
+out/
+build/
+dist/
+.vercel/
+
+.DS_Store
+*.pem
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+
+.prisma/client
+
+.turbo
+
+# Local Netlify folder
+.netlify

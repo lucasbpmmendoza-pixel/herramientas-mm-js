@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+dist
+build
+.env*
+!.env.example
+.git
+.gitignore
+README.md
+.DS_Store
+*.pem
+.idea
+.vscode
+.turbo

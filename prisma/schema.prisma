@@ -1,0 +1,130 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String        @id(map: "PK_users") @default(cuid()) @db.NVarChar(25)
+  username       String        @unique(map: "UQ_users_username") @db.NVarChar(255)
+  nip            String        @unique(map: "UQ_users_nip") @db.NVarChar(255)
+  password       String        @db.NVarChar(255)
+  email          String        @unique(map: "UQ_users_email") @db.NVarChar(255)
+  firstName      String        @db.NVarChar(255)
+  lastName       String        @db.NVarChar(255)
+  diasVacaciones Int           @default(0, map: "DF__users__diasVacac__72C60C4A")
+  diasVacUsados  Int           @default(0, map: "DF__users__diasVacUs__73BA3083")
+  totalRetardos  Int           @default(0)
+  totalFaltas    Int           @default(0)
+  sexo                String?       @db.NVarChar(50)
+  nivelEducativo      String?       @db.NVarChar(255)
+  area                String?       @db.NVarChar(255)
+  estadoCivil         String?       @db.NVarChar(100)
+  respuestaMentalidad String?       @db.NVarChar(255)
+  respuestaComunicacion String?     @db.NVarChar(255)
+  antiguedadAnios     DateTime?
+  analisisNumerologia String?       @db.NVarChar(Max)
+  fechaNacimiento     DateTime?
+  isAdmin        Boolean       @default(false, map: "DF__users__isAdmin__74AE54BC")
+  isActive       Boolean       @default(true, map: "DF__users__isActive__75A278F5")
+  role           String        @default("USER", map: "DF__users__role__76969D2E") @db.NVarChar(10)
+  createdAt      DateTime      @default(now(), map: "DF__users__createdAt__778AC167")
+  updatedAt      DateTime      @default(now(), map: "DF__users__updatedAt__787EE5A0") @updatedAt
+  auditLogs      AuditLog[]
+  estadisticas   Estadistica[]
+  incidencias    Incidencia[]
+  permisos       Permiso[]
+  vacaciones     Vacacion[]
+
+  @@map("users")
+}
+
+model Permiso {
+  id          String   @id(map: "PK_permisos") @default(cuid()) @db.NVarChar(25)
+  userId      String   @db.NVarChar(25)
+  tipoPermiso String   @db.NVarChar(255)
+  esMismoDia  Boolean  @default(false, map: "DF__permisos__esMism__7C4F7684")
+  fechaInicio DateTime
+  fechaFin    DateTime
+  horaInicio  String?  @db.NVarChar(10)
+  horaFin     String?  @db.NVarChar(10)
+  descripcion String   @db.VarChar(500)
+  estado      String   @default("PENDIENTE", map: "DF__permisos__estado__7D439ABD") @db.NVarChar(50)
+  createdAt   DateTime @default(now(), map: "DF__permisos__create__7E37BEF6")
+  updatedAt   DateTime @default(now(), map: "DF__permisos__update__7F2BE32F") @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_permisos_users")
+
+  @@index([userId], map: "IX_permisos_userId")
+  @@map("permisos")
+}
+
+model Vacacion {
+  id          String   @id(map: "PK_vacaciones") @default(cuid()) @db.NVarChar(25)
+  userId      String   @db.NVarChar(25)
+  fechaInicio DateTime
+  fechaFin    DateTime
+  diasTotal   Int
+  descripcion String   @db.VarChar(500)
+  estado      String   @default("PENDIENTE", map: "DF__vacacione__estad__02FC7413") @db.NVarChar(50)
+  createdAt   DateTime @default(now(), map: "DF__vacacione__creat__03F0984C")
+  updatedAt   DateTime @default(now(), map: "DF__vacacione__updat__04E4BC85") @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_vacaciones_users")
+
+  @@index([userId], map: "IX_vacaciones_userId")
+  @@map("vacaciones")
+}
+
+model Estadistica {
+  id               String   @id(map: "PK_estadisticas") @default(cuid()) @db.NVarChar(25)
+  userId           String   @db.NVarChar(25)
+  metaTrabajo      Float
+  horasTrabajadas  Float
+  proyectos        Int
+  tareasCompletas  Int
+  tareasRetrasadas Int
+  calificacion     Float
+  mes              Int
+  anio             Int      @map("año")
+  createdAt        DateTime @default(now(), map: "DF__estadisti__creat__09A971A2")
+  updatedAt        DateTime @default(now(), map: "DF__estadisti__updat__0A9D95DB") @updatedAt
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_estadisticas_users")
+
+  @@unique([userId, mes, anio], map: "UQ_estadisticas_user_mes_año")
+  @@index([userId], map: "IX_estadisticas_userId")
+  @@map("estadisticas")
+}
+
+model Incidencia {
+  id          String   @id @default(cuid()) @db.NVarChar(25)
+  userId      String   @db.NVarChar(25)
+  tipo        String   @db.NVarChar(20)
+  fecha       DateTime
+  minutos     Int      @default(0)
+  dias        Int      @default(1)
+  descripcion String   @default("") @db.NVarChar(500)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId])
+  @@map("incidencias")
+}
+
+model AuditLog {
+  id        String   @id(map: "PK_audit_logs") @default(cuid()) @db.NVarChar(25)
+  userId    String   @db.NVarChar(25)
+  accion    String   @db.NVarChar(255)
+  tabla     String   @db.NVarChar(255)
+  recordId  String   @db.NVarChar(255)
+  cambios   String   @db.VarChar(1000)
+  createdAt DateTime @default(now(), map: "DF__audit_log__creat__0E6E26BF")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_audit_logs_users")
+
+  @@index([createdAt], map: "IX_audit_logs_createdAt")
+  @@index([userId], map: "IX_audit_logs_userId")
+  @@map("audit_logs")
+}

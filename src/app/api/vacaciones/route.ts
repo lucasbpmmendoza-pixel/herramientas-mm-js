@@ -62,8 +62,12 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    const toDateStr = (d: Date) => d.toISOString().split("T")[0];
+
     const vacacionesConUsados = vacaciones.map((v) => ({
       ...v,
+      fechaInicio: toDateStr(v.fechaInicio),
+      fechaFin: toDateStr(v.fechaFin),
       user: {
         ...v.user,
         diasVacaciones: userDiasVacMap[v.userId] ?? v.user.diasVacaciones,

@@ -3,6 +3,11 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const parseDateOnlyToUtcNoon = (dateOnly: string): Date => {
+  const [year, month, day] = dateOnly.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+};
+
 // GET - List incidencias, optionally filter by userId
 export async function GET(request: NextRequest) {
   try {
@@ -37,17 +42,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: "userId, tipo y fecha son requeridos" }, { status: 400 });
     }
 
-    if (!["RETARDO", "INASISTENCIA"].includes(tipo)) {
-      return NextResponse.json({ success: false, error: "Tipo debe ser RETARDO o INASISTENCIA" }, { status: 400 });
+    if (!["RETARDO", "FALTA", "INASISTENCIA"].includes(tipo)) {
+      return NextResponse.json({ success: false, error: "Tipo debe ser RETARDO o FALTA" }, { status: 400 });
     }
+
+    const normalizedTipo = tipo === "INASISTENCIA" ? "FALTA" : tipo;
 
     const incidencia = await prisma.incidencia.create({
       data: {
         userId,
-        tipo,
-        fecha: new Date(fecha),
-        minutos: tipo === "RETARDO" ? (minutos || 0) : 0,
-        dias: tipo === "FALTA" ? (dias || 1) : 0,
+        tipo: normalizedTipo,
+        fecha: parseDateOnlyToUtcNoon(fecha),
+        minutos: normalizedTipo === "RETARDO" ? (minutos || 0) : 0,
+        dias: normalizedTipo === "FALTA" ? (dias || 1) : 0,
         descripcion: descripcion || "",
       },
       include: { user: { select: { id: true, firstName: true, lastName: true, nip: true } } },
@@ -56,7 +63,7 @@ export async function POST(request: NextRequest) {
     // Update user counters
     await prisma.user.update({
       where: { id: userId },
-      data: tipo === "RETARDO"
+      data: normalizedTipo === "RETARDO"
         ? { totalRetardos: { increment: 1 } }
         : { totalFaltas: { increment: 1 } },
     });

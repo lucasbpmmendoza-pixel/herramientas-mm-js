@@ -152,7 +152,13 @@ export default function PermisosPage() {
     }
   };
 
-  const formatDate = (d: string) => new Date(d).toLocaleDateString("es-MX");
+  const formatDate = (d: string) =>
+    new Intl.DateTimeFormat("es-MX", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      timeZone: "UTC",
+    }).format(new Date(d));
 
   const estadoBadge = (estado: string) => {
     const colors: Record<string, string> = {

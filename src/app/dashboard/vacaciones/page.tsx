@@ -180,7 +180,10 @@ export default function VacacionesPage() {
     }
   };
 
-  const formatDate = (d: string) => new Date(d).toLocaleDateString("es-MX");
+  const formatDate = (d: string) => {
+    const [y, m, day] = d.split("-").map(Number);
+    return new Date(y, m - 1, day).toLocaleDateString("es-MX");
+  };
 
   const estadoBadge = (estado: string) => {
     const colors: Record<string, string> = {

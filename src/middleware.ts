@@ -75,5 +75,7 @@ export const config = {
     "/api/estadisticas/:path*",
     "/api/permisos/:path*",
     "/api/incidencias/:path*",
+    "/api/chat/:path*",
+    "/api/preguntas-respuestas/:path*",
   ],
 };

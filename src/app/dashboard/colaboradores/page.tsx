@@ -64,6 +64,22 @@ interface Incidencia {
 }
 
 export default function ColaboradoresPage() {
+  const getTodayLocalISO = () => {
+    const now = new Date();
+    const offsetMs = now.getTimezoneOffset() * 60 * 1000;
+    return new Date(now.getTime() - offsetMs).toISOString().split("T")[0];
+  };
+
+  const parseDateOnly = (isoDate: string): Date => {
+    const [year, month, day] = isoDate.split("T")[0].split("-").map(Number);
+    return new Date(year, month - 1, day);
+  };
+
+  const getYearFromDateOnly = (isoDate: string): number => parseDateOnly(isoDate).getFullYear();
+
+  const formatDateOnlyEsMx = (isoDate: string): string =>
+    parseDateOnly(isoDate).toLocaleDateString("es-MX");
+
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -78,7 +94,7 @@ export default function ColaboradoresPage() {
     nivelEducativo: "",
     estadoCivil: "",
     fechaNacimiento: "",
-    antiguedadAnios: new Date().toISOString().split("T")[0],
+    antiguedadAnios: getTodayLocalISO(),
     respuestaMentalidad: "",
     respuestaComunicacion: "",
   });
@@ -94,7 +110,7 @@ export default function ColaboradoresPage() {
   const [profileVacaciones, setProfileVacaciones] = useState<Vacacion[]>([]);
   const [incForm, setIncForm] = useState({
     tipo: "RETARDO",
-    fecha: new Date().toISOString().split("T")[0],
+    fecha: getTodayLocalISO(),
     minutos: 11,
     dias: 1,
     descripcion: "",
@@ -112,14 +128,21 @@ export default function ColaboradoresPage() {
   // Modal state
   const [showVacModal, setShowVacModal] = useState<string | null>(null);
   const [showFaltasModal, setShowFaltasModal] = useState<string | null>(null);
+  const [showPermisosModal, setShowPermisosModal] = useState<string | null>(null);
   const [modalVacaciones, setModalVacaciones] = useState<Vacacion[]>([]);
   const [modalIncidencias, setModalIncidencias] = useState<Incidencia[]>([]);
+  const [modalPermisos, setModalPermisos] = useState<Permiso[]>([]);
   const [showModalVacForm, setShowModalVacForm] = useState(false);
   const [showModalIncForm, setShowModalIncForm] = useState(false);
+  const [showModalPermisosForm, setShowModalPermisosForm] = useState(false);
   const [modalVacForm, setModalVacForm] = useState({ fechaInicio: "", fechaFin: "", descripcion: "", diasTotal: 1 });
+  const [modalPermisosForm, setModalPermisosForm] = useState({
+    tipoPermiso: "CITA MÉDICA", esMismoDia: false, fechaInicio: "", fechaFin: "",
+    horaInicio: "", horaFin: "", descripcion: "", motivoOtro: "",
+  });
   const [modalIncForm, setModalIncForm] = useState({
     tipo: "RETARDO",
-    fecha: new Date().toISOString().split("T")[0],
+    fecha: getTodayLocalISO(),
     minutos: 11,
     dias: 1,
     descripcion: "",
@@ -159,7 +182,7 @@ export default function ColaboradoresPage() {
         setForm({
           firstName: "", lastName: "", nip: "", email: "",
           sexo: "", area: "", nivelEducativo: "", estadoCivil: "",
-          fechaNacimiento: "", antiguedadAnios: new Date().toISOString().split("T")[0],
+          fechaNacimiento: "", antiguedadAnios: getTodayLocalISO(),
           respuestaMentalidad: "", respuestaComunicacion: "",
         });
         fetchUsers();
@@ -241,7 +264,7 @@ export default function ColaboradoresPage() {
       if (data.success) {
         setSuccessMsg("Incidencia registrada");
         setShowIncForm(false);
-        setIncForm({ tipo: "RETARDO", fecha: new Date().toISOString().split("T")[0], minutos: 11, dias: 1, descripcion: "" });
+        setIncForm({ tipo: "RETARDO", fecha: getTodayLocalISO(), minutos: 11, dias: 1, descripcion: "" });
         fetchIncidencias(selectedUserId);
         setTimeout(() => setSuccessMsg(""), 3000);
       } else {
@@ -289,6 +312,71 @@ export default function ColaboradoresPage() {
     } catch (err) {
       console.error("Error cargando perfil:", err);
     }
+  };
+
+  const handleOpenPermisosModal = async (userId: string) => {
+    setShowPermisosModal(userId);
+    setShowModalPermisosForm(false);
+    try {
+      const res = await authFetch(`/api/permisos?userId=${userId}`);
+      const data = await res.json();
+      if (data.success) setModalPermisos(data.data.permisos.filter((p: Permiso & { userId: string }) => p.userId === userId));
+    } catch (err) { console.error(err); }
+  };
+
+  const handleCreateModalPermiso = async (e: React.FormEvent, userId: string) => {
+    e.preventDefault();
+    try {
+      const { motivoOtro, ...rest } = modalPermisosForm;
+      const payload = {
+        ...rest,
+        userId,
+        tipoPermiso: modalPermisosForm.tipoPermiso === "OTRO" ? `OTRO: ${motivoOtro}` : modalPermisosForm.tipoPermiso,
+        fechaFin: modalPermisosForm.esMismoDia ? modalPermisosForm.fechaInicio : modalPermisosForm.fechaFin,
+      };
+      const res = await authFetch("/api/permisos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSuccessMsg("Permiso registrado");
+        setShowModalPermisosForm(false);
+        setModalPermisosForm({ tipoPermiso: "CITA MÉDICA", esMismoDia: false, fechaInicio: "", fechaFin: "", horaInicio: "", horaFin: "", descripcion: "", motivoOtro: "" });
+        handleOpenPermisosModal(userId);
+        setTimeout(() => setSuccessMsg(""), 3000);
+      } else { setError(data.error); }
+    } catch { setError("Error al registrar permiso"); }
+  };
+
+  const handleEstadoModalPermiso = async (id: string, estado: string, userId: string) => {
+    try {
+      const res = await authFetch("/api/permisos", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, estado }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSuccessMsg(`Permiso ${estado.toLowerCase()}`);
+        handleOpenPermisosModal(userId);
+        setTimeout(() => setSuccessMsg(""), 3000);
+      }
+    } catch (err) { console.error(err); }
+  };
+
+  const handleDeleteModalPermiso = async (id: string, userId: string) => {
+    if (!confirm("¿Eliminar este permiso?")) return;
+    try {
+      const res = await authFetch(`/api/permisos?id=${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        setSuccessMsg("Permiso eliminado");
+        handleOpenPermisosModal(userId);
+        setTimeout(() => setSuccessMsg(""), 3000);
+      }
+    } catch (err) { console.error(err); }
   };
 
   const handleOpenVacModal = async (userId: string) => {
@@ -343,7 +431,7 @@ export default function ColaboradoresPage() {
       if (data.success) {
         setSuccessMsg("Incidencia registrada");
         setShowModalIncForm(false);
-        setModalIncForm({ tipo: "RETARDO", fecha: new Date().toISOString().split("T")[0], minutos: 11, dias: 1, descripcion: "" });
+        setModalIncForm({ tipo: "RETARDO", fecha: getTodayLocalISO(), minutos: 11, dias: 1, descripcion: "" });
         handleOpenFaltasModal(userId);
         fetchUsers();
         setTimeout(() => setSuccessMsg(""), 3000);
@@ -409,8 +497,8 @@ export default function ColaboradoresPage() {
     return thisYear <= today ? thisYear : new Date(today.getFullYear() - 1, start.getMonth(), start.getDate());
   };
   const currentYear = new Date().getFullYear();
-  const retardos = incidencias.filter((i) => i.tipo === "RETARDO" && new Date(i.fecha).getFullYear() === currentYear);
-  const faltas = incidencias.filter((i) => i.tipo === "FALTA" && new Date(i.fecha).getFullYear() === currentYear);
+  const retardos = incidencias.filter((i) => i.tipo === "RETARDO" && getYearFromDateOnly(i.fecha) === currentYear);
+  const faltas = incidencias.filter((i) => i.tipo === "FALTA" && getYearFromDateOnly(i.fecha) === currentYear);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -844,10 +932,14 @@ export default function ColaboradoresPage() {
                             </p>
                             <span className="text-xs text-blue-600 group-hover:text-blue-200">Ver / Agregar →</span>
                           </button>
-                          <div className="rounded-lg border border-purple-200 bg-white p-2">
-                            <span className="text-xs font-medium uppercase text-gray-500">Permisos</span>
-                            <p className="text-sm font-medium text-gray-900">{profilePermisos.length}</p>
-                          </div>
+                          <button
+                            onClick={() => handleOpenPermisosModal(user.id)}
+                            className="rounded-lg border border-blue-200 bg-white p-2 text-left transition-all hover:bg-blue-700 hover:border-blue-700 hover:shadow-md group"
+                          >
+                            <span className="text-xs font-medium uppercase text-gray-500 group-hover:text-blue-200">Permisos</span>
+                            <p className="text-sm font-medium text-gray-900 group-hover:text-white">{profilePermisos.length} registros</p>
+                            <span className="text-xs text-blue-600 group-hover:text-blue-200">Ver / Agregar →</span>
+                          </button>
                           {user.analisisNumerologia && (
                             <div className="rounded-lg border border-purple-200 bg-white p-2 lg:col-span-4 sm:col-span-2">
                               <span className="text-xs font-medium uppercase text-gray-500">Análisis Numerología</span>
@@ -1005,7 +1097,7 @@ export default function ColaboradoresPage() {
                                       </span>
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-700">
-                                      {new Date(inc.fecha).toLocaleDateString("es-MX")}
+                                      {formatDateOnlyEsMx(inc.fecha)}
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-700">
                                       {inc.tipo === "RETARDO" ? `${inc.minutos} min` : `${inc.dias} día(s)`}
@@ -1207,14 +1299,14 @@ export default function ColaboradoresPage() {
       {showFaltasModal && (() => {
         const modalUser = users.find((u) => u.id === showFaltasModal);
         const currentYear = new Date().getFullYear();
-        const modalIncidenciasAnio = modalIncidencias.filter((i) => new Date(i.fecha).getFullYear() === currentYear);
+        const modalIncidenciasAnio = modalIncidencias.filter((i) => getYearFromDateOnly(i.fecha) === currentYear);
         const mRetardos = modalIncidenciasAnio.filter((i) => i.tipo === "RETARDO");
         const mFaltas = modalIncidenciasAnio.filter((i) => i.tipo === "FALTA");
 
         // Group all incidencias by year for display
         const byYear: Record<number, typeof modalIncidencias> = {};
         for (const inc of modalIncidencias) {
-          const yr = new Date(inc.fecha).getFullYear();
+          const yr = getYearFromDateOnly(inc.fecha);
           if (!byYear[yr]) byYear[yr] = [];
           byYear[yr].push(inc);
         }
@@ -1326,7 +1418,7 @@ export default function ColaboradoresPage() {
                                       inc.tipo === "RETARDO" ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800"
                                     }`}>{inc.tipo}</span>
                                   </td>
-                                  <td className="whitespace-nowrap px-3 py-2">{new Date(inc.fecha).toLocaleDateString("es-MX")}</td>
+                                  <td className="whitespace-nowrap px-3 py-2">{formatDateOnlyEsMx(inc.fecha)}</td>
                                   <td className="whitespace-nowrap px-3 py-2">{inc.tipo === "RETARDO" ? `${inc.minutos} min` : `${inc.dias} día(s)`}</td>
                                   <td className="max-w-xs truncate px-3 py-2 text-gray-500">{inc.descripcion || "—"}</td>
                                   <td className="whitespace-nowrap px-3 py-2">
@@ -1342,6 +1434,195 @@ export default function ColaboradoresPage() {
                   </div>
                 ) : (
                   <p className="py-6 text-center text-sm text-gray-400">No hay incidencias registradas.</p>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* Modal Permisos */}
+      {showPermisosModal && (() => {
+        const modalUser = users.find((u) => u.id === showPermisosModal);
+        const TIPOS = ["CITA MÉDICA", "TRÁMITE PERSONAL", "EVENTO", "REUNIÓN", "OTRO"];
+        const permisosAnioActual = modalPermisos.filter((p) => getYearFromDateOnly(p.fechaInicio) === currentYear);
+        const pendientes = permisosAnioActual.filter((p) => p.estado === "PENDIENTE").length;
+        const aprobados = permisosAnioActual.filter((p) => p.estado === "APROBADO").length;
+        const rechazados = permisosAnioActual.filter((p) => p.estado === "RECHAZADO").length;
+
+        const byYear: Record<number, typeof modalPermisos> = {};
+        for (const permiso of modalPermisos) {
+          const yr = getYearFromDateOnly(permiso.fechaInicio);
+          if (!byYear[yr]) byYear[yr] = [];
+          byYear[yr].push(permiso);
+        }
+        const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
+        for (const yr of years) {
+          byYear[yr].sort((a, b) => parseDateOnly(b.fechaInicio).getTime() - parseDateOnly(a.fechaInicio).getTime());
+        }
+
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+            <div className="w-full max-w-2xl rounded-xl bg-white shadow-xl">
+              <div className="flex items-center justify-between border-b px-6 py-4">
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900">Permisos</h2>
+                  {modalUser && <p className="text-sm text-gray-500">{modalUser.firstName} {modalUser.lastName}</p>}
+                </div>
+                <div className="flex items-center gap-3">
+                  {pendientes > 0 && (
+                    <span className="rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-semibold text-yellow-800">{pendientes} pendiente{pendientes !== 1 ? "s" : ""} este año</span>
+                  )}
+                  <button
+                    onClick={() => setShowModalPermisosForm(!showModalPermisosForm)}
+                    className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700"
+                  >
+                    {showModalPermisosForm ? "Cancelar" : "+ Agregar Permiso"}
+                  </button>
+                  <button onClick={() => { setShowPermisosModal(null); setShowModalPermisosForm(false); setModalPermisos([]); }} className="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+                </div>
+              </div>
+              <div className="max-h-[70vh] overflow-y-auto p-6">
+                <div className="mb-1 text-xs font-semibold uppercase text-gray-500">{currentYear} — resumen</div>
+                <div className="mb-4 grid grid-cols-2 gap-3 md:grid-cols-4">
+                  <div className="rounded-lg bg-blue-50 p-2 text-center">
+                    <div className="text-xl font-bold text-blue-700">{permisosAnioActual.length}</div>
+                    <div className="text-xs text-blue-600">Permisos</div>
+                  </div>
+                  <div className="rounded-lg bg-yellow-50 p-2 text-center">
+                    <div className="text-xl font-bold text-yellow-700">{pendientes}</div>
+                    <div className="text-xs text-yellow-600">Pendientes</div>
+                  </div>
+                  <div className="rounded-lg bg-green-50 p-2 text-center">
+                    <div className="text-xl font-bold text-green-700">{aprobados}</div>
+                    <div className="text-xs text-green-600">Aprobados</div>
+                  </div>
+                  <div className="rounded-lg bg-red-50 p-2 text-center">
+                    <div className="text-xl font-bold text-red-700">{rechazados}</div>
+                    <div className="text-xs text-red-600">Rechazados</div>
+                  </div>
+                </div>
+                {showModalPermisosForm && (
+                  <form onSubmit={(e) => handleCreateModalPermiso(e, showPermisosModal!)} className="mb-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
+                    <h3 className="mb-3 text-sm font-semibold text-blue-900">Registrar Permiso</h3>
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700">Tipo *</label>
+                        <select value={modalPermisosForm.tipoPermiso} onChange={(e) => setModalPermisosForm({ ...modalPermisosForm, tipoPermiso: e.target.value })}
+                          className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none">
+                          {TIPOS.map((t) => <option key={t} value={t}>{t}</option>)}
+                        </select>
+                      </div>
+                      {modalPermisosForm.tipoPermiso === "OTRO" && (
+                        <div>
+                          <label className="block text-xs font-medium text-gray-700">Motivo *</label>
+                          <input type="text" required value={modalPermisosForm.motivoOtro}
+                            onChange={(e) => setModalPermisosForm({ ...modalPermisosForm, motivoOtro: e.target.value })}
+                            placeholder="Especifique..." className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
+                        </div>
+                      )}
+                      <div className="md:col-span-2">
+                        <label className="flex items-center gap-2 text-xs font-medium text-gray-700">
+                          <input type="checkbox" checked={modalPermisosForm.esMismoDia}
+                            onChange={(e) => setModalPermisosForm({ ...modalPermisosForm, esMismoDia: e.target.checked })}
+                            className="rounded border-gray-300" />
+                          Permiso por horas (mismo día)
+                        </label>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700">{modalPermisosForm.esMismoDia ? "Fecha *" : "Fecha Inicio *"}</label>
+                        <input type="date" required value={modalPermisosForm.fechaInicio}
+                          onChange={(e) => setModalPermisosForm({ ...modalPermisosForm, fechaInicio: e.target.value })}
+                          className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
+                      </div>
+                      {!modalPermisosForm.esMismoDia && (
+                        <div>
+                          <label className="block text-xs font-medium text-gray-700">Fecha Fin *</label>
+                          <input type="date" required value={modalPermisosForm.fechaFin}
+                            onChange={(e) => setModalPermisosForm({ ...modalPermisosForm, fechaFin: e.target.value })}
+                            className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
+                        </div>
+                      )}
+                      {modalPermisosForm.esMismoDia && (
+                        <>
+                          <div>
+                            <label className="block text-xs font-medium text-gray-700">Hora Inicio *</label>
+                            <input type="time" required value={modalPermisosForm.horaInicio}
+                              onChange={(e) => setModalPermisosForm({ ...modalPermisosForm, horaInicio: e.target.value })}
+                              className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium text-gray-700">Hora Fin *</label>
+                            <input type="time" required value={modalPermisosForm.horaFin}
+                              onChange={(e) => setModalPermisosForm({ ...modalPermisosForm, horaFin: e.target.value })}
+                              className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
+                          </div>
+                        </>
+                      )}
+                      <div className="md:col-span-2">
+                        <label className="block text-xs font-medium text-gray-700">Descripcion / Motivo *</label>
+                        <textarea required value={modalPermisosForm.descripcion}
+                          onChange={(e) => setModalPermisosForm({ ...modalPermisosForm, descripcion: e.target.value })}
+                          rows={2} placeholder="Ej: Cita médica de 4-7PM"
+                          className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
+                      </div>
+                    </div>
+                    <button type="submit" className="mt-3 rounded bg-blue-600 px-4 py-1.5 text-xs font-medium text-white hover:bg-blue-700">Registrar</button>
+                  </form>
+                )}
+                {years.length > 0 ? (
+                  <div className="space-y-4">
+                    {years.map((yr) => (
+                      <div key={yr}>
+                        <h3 className="mb-2 text-sm font-semibold text-gray-600">{yr}</h3>
+                        <div className="overflow-x-auto rounded-lg border border-gray-200">
+                          <table className="min-w-full divide-y divide-gray-200 text-sm">
+                            <thead className="bg-gray-50">
+                              <tr>
+                                <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Tipo</th>
+                                <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Fecha / Horario</th>
+                                <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Descripcion</th>
+                                <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Estado</th>
+                                <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100 bg-white">
+                              {byYear[yr].map((p) => (
+                                <tr key={p.id}>
+                                  <td className="whitespace-nowrap px-3 py-2 text-xs">{p.tipoPermiso}</td>
+                                  <td className="whitespace-nowrap px-3 py-2 text-xs">
+                                    {p.esMismoDia
+                                      ? `${formatDateOnlyEsMx(p.fechaInicio)} ${p.horaInicio ?? ""} - ${p.horaFin ?? ""}`
+                                      : `${formatDateOnlyEsMx(p.fechaInicio)} \u2192 ${formatDateOnlyEsMx(p.fechaFin)}`}
+                                  </td>
+                                  <td className="max-w-xs truncate px-3 py-2 text-xs text-gray-500">{p.descripcion}</td>
+                                  <td className="whitespace-nowrap px-3 py-2">
+                                    <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${
+                                      p.estado === "APROBADO" ? "bg-green-100 text-green-800" :
+                                      p.estado === "RECHAZADO" ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"
+                                    }`}>{p.estado}</span>
+                                  </td>
+                                  <td className="whitespace-nowrap px-3 py-2">
+                                    <div className="flex gap-1">
+                                      {p.estado === "PENDIENTE" && (
+                                        <>
+                                          <button onClick={() => handleEstadoModalPermiso(p.id, "APROBADO", showPermisosModal!)} className="rounded border border-green-200 bg-white px-2 py-0.5 text-xs font-medium text-green-600 hover:bg-green-50 hover:border-green-400 transition">Aprobar</button>
+                                          <button onClick={() => handleEstadoModalPermiso(p.id, "RECHAZADO", showPermisosModal!)} className="rounded border border-red-200 bg-white px-2 py-0.5 text-xs font-medium text-red-600 hover:bg-red-50 hover:border-red-400 transition">Rechazar</button>
+                                        </>
+                                      )}
+                                      <button onClick={() => handleDeleteModalPermiso(p.id, showPermisosModal!)} className="rounded border border-gray-200 bg-white px-2 py-0.5 text-xs font-medium text-gray-500 hover:bg-gray-50 hover:border-gray-400 transition">Eliminar</button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="py-6 text-center text-sm text-gray-400">No hay permisos registrados.</p>
                 )}
               </div>
             </div>

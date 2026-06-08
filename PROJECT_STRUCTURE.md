@@ -2,14 +2,14 @@
 
 Estructura completa del proyecto Next.js con TypeScript y Tailwind CSS.
 
-## Árbol de Directorios
+## arbol de Directorios
 
 ```
 herramientas-mm-js/
 ├── .github/
 │   └── workflows/
 │       ├── deploy.yml              # CD/CI para Vercel
-│       └── test.yml                # Tests automáticos
+│       └── test.yml                # Tests automaticos
 ├── prisma/
 │   ├── schema.prisma               # Esquema de BD (Prisma)
 │   └── seed.js                     # Datos iniciales
@@ -29,15 +29,15 @@ herramientas-mm-js/
 │   │   │       └── route.ts        # GET/POST /api/vacaciones
 │   │   ├── auth/
 │   │   │   └── login/
-│   │   │       └── page.tsx        # Página login
+│   │   │       └── page.tsx        # Pagina login
 │   │   ├── dashboard/
 │   │   │   ├── colaboradores/      # (Futuro)
 │   │   │   ├── estadisticas/       # (Futuro)
 │   │   │   ├── permisos/           # (Futuro)
 │   │   │   ├── vacaciones/         # (Futuro)
 │   │   │   └── page.tsx            # Dashboard principal
-│   │   ├── layout.tsx              # Layout raíz
-│   │   └── page.tsx                # Página inicio
+│   │   ├── layout.tsx              # Layout raiz
+│   │   └── page.tsx                # Pagina inicio
 │   ├── components/
 │   │   ├── LoginForm.tsx           # Formulario login
 │   │   └── (otros componentes)     # Botones, Cards, etc.
@@ -48,39 +48,39 @@ herramientas-mm-js/
 │   ├── types/
 │   │   └── index.ts                # TypeScript interfaces
 │   ├── utils/
-│   │   └── (funciones útiles)
+│   │   └── (funciones utiles)
 │   ├── styles/
 │   │   └── globals.css             # Estilos globales
 │   └── middleware.ts               # Middleware de rutas
 ├── public/
-│   └── (archivos estáticos)
+│   └── (archivos estaticos)
 ├── .env.example                    # Variables de entorno (template)
 ├── .env.local                      # Variables de entorno (NO comitear)
 ├── .eslintrc.json                  # Reglas ESLint
 ├── .gitignore                      # Archivos ignorados
-├── .prettierrc                     # Configuración Prettier
+├── .prettierrc                     # Configuracion Prettier
 ├── .dockerignore                   # Archivos ignorados Docker
-├── tailwind.config.js              # Configuración Tailwind
-├── tsconfig.json                   # Configuración TypeScript
-├── next.config.js                  # Configuración Next.js
-├── postcss.config.js               # Configuración PostCSS
+├── tailwind.config.js              # Configuracion Tailwind
+├── tsconfig.json                   # Configuracion TypeScript
+├── next.config.js                  # Configuracion Next.js
+├── postcss.config.js               # Configuracion PostCSS
 ├── Dockerfile                      # Docker image
-├── docker-compose.yml              # Orquestación Docker
+├── docker-compose.yml              # Orquestacion Docker
 ├── package.json                    # Dependencias npm
-├── README.md                       # Documentación principal
-├── QUICK_START.md                  # Inicio rápido
-├── DEPLOYMENT_GUIDE.md             # Guía deployment
+├── README.md                       # Documentacion principal
+├── QUICK_START.md                  # Inicio rapido
+├── DEPLOYMENT_GUIDE.md             # Guia deployment
 ├── AZURE_SQL_SETUP.md              # Setup Azure SQL
 ├── DOCKER_SETUP.md                 # Setup Docker
 └── API_TESTING.md                  # Ejemplos API
 ```
 
-## Explicación por Carpeta
+## Explicacion por Carpeta
 
 ### `/src/app`
-**Next.js App Router** - Todas las páginas y rutas API.
+**Next.js App Router** - Todas las paginas y rutas API.
 - Estructura de directorios = rutas de URL
-- `page.tsx` = página renderizable
+- `page.tsx` = pagina renderizable
 - `route.ts` = endpoint API
 
 ### `/src/components`
@@ -95,30 +95,30 @@ herramientas-mm-js/
 **Funciones utilitarias** compartidas.
 - `auth.ts` - Manejo de JWT, tokens
 - `api-client.ts` - Cliente HTTP con axios
-- Helpers de validación, formateo, etc.
+- Helpers de validacion, formateo, etc.
 
 ### `/src/types`
 **Interfaces TypeScript** compartidas.
 - `User` - Estructura de usuario
-- `Estadistica` - Estadísticas de colaboradores
-- `ApiResponse` - Respuesta estándar API
+- `Estadistica` - Estadisticas de colaboradores
+- `ApiResponse` - Respuesta estandar API
 
 ### `/prisma`
 **ORM Prisma** - Base de datos.
-- `schema.prisma` - Definición de tablas y relaciones
+- `schema.prisma` - Definicion de tablas y relaciones
 - `seed.js` - Script para datos iniciales
 
 ### `/.github/workflows`
-**GitHub Actions** - CI/CD automático.
+**GitHub Actions** - CI/CD automatico.
 - Tests en cada PR
 - Deploy en push a main
 
 ### `/public`
-**Archivos estáticos** (imágenes, fonts, etc).
+**Archivos estaticos** (imagenes, fonts, etc).
 
 ---
 
-## Convenciones de Código
+## Convenciones de Codigo
 
 ### Nombres de Archivos
 
@@ -128,7 +128,7 @@ herramientas-mm-js/
 - Hooks: camelCase (useUser.ts)
 - Utils: camelCase (formatDate.ts)
 - Tipos: PascalCase (User.ts)
-- Páginas: lowercase (page.tsx)
+- Paginas: lowercase (page.tsx)
 - Rutas API: route.ts
 
 ❌ Evitar
@@ -148,7 +148,7 @@ import type { LoginFormProps } from "@/types"; // Tipos
 export function LoginForm({ onSuccess }: LoginFormProps) {
   const [loading, setLoading] = useState(false);
   
-  // Lógica aquí
+  // Logica aqui
   
   return (
     <form>
@@ -170,13 +170,13 @@ const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
   try {
-    // Verificar autenticación
+    // Verificar autenticacion
     const token = getTokenFromHeader(request.headers.get("authorization"));
     if (!verifyToken(token || "")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     
-    // Lógica aquí
+    // Logica aqui
     
     return NextResponse.json({ success: true, data: [] });
   } catch (error) {
@@ -197,7 +197,7 @@ export async function POST(request: NextRequest) {
 ## Flujo de Datos
 
 ```
-Página (page.tsx)
+Pagina (page.tsx)
     ↓
   Componente (LoginForm.tsx)
     ↓
@@ -277,7 +277,7 @@ export function MiModelo() {
 }
 ```
 
-### 5. Crear página
+### 5. Crear pagina
 
 ```tsx
 // src/app/dashboard/mi-modulo/page.tsx
@@ -306,15 +306,15 @@ __tests__/
 
 ---
 
-## Documentación
+## Documentacion
 
 Cada carpeta puede tener su `README.md`:
 
 ```
 src/
-├── components/README.md    # Cómo usar componentes
+├── components/README.md    # Como usar componentes
 ├── lib/README.md           # Helpers disponibles
-├── app/api/README.md       # Documentación API
+├── app/api/README.md       # Documentacion API
 ```
 
 ---
@@ -323,15 +323,15 @@ src/
 
 ✅ Reglas:
 - 1 responsabilidad por archivo
-- Máximo 300 líneas por archivo
+- Maximo 300 lineas por archivo
 - TypeScript strict mode
-- Comentar lógica compleja
+- Comentar logica compleja
 - Nombres descriptivos
 
 ❌ Evitar:
-- Archivos de 1000+ líneas
-- "Lógica mágica" sin comentarios
-- Código duplicado
+- Archivos de 1000+ lineas
+- "Logica magica" sin comentarios
+- Codigo duplicado
 - Imports circulares
 
 ---

@@ -6,7 +6,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow-xl">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-900">Herramientas MM</h1>
-          <p className="mt-2 text-gray-600">Iniciar Sesión</p>
+          <p className="mt-2 text-gray-600">Iniciar Sesion</p>
         </div>
 
         <LoginForm />

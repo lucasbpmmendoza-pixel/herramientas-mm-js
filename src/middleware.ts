@@ -50,7 +50,7 @@ export async function middleware(request: NextRequest) {
   const parts = authHeader.split(" ");
   if (parts.length !== 2 || parts[0] !== "Bearer") {
     return NextResponse.json(
-      { success: false, error: "No autorizado: formato inválido" },
+      { success: false, error: "No autorizado: formato invalido" },
       { status: 401 }
     );
   }
@@ -60,7 +60,7 @@ export async function middleware(request: NextRequest) {
 
   if (!payload) {
     return NextResponse.json(
-      { success: false, error: "No autorizado: token inválido o expirado" },
+      { success: false, error: "No autorizado: token invalido o expirado" },
       { status: 401 }
     );
   }

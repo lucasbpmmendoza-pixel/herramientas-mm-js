@@ -56,7 +56,7 @@ async function main() {
     },
   });
 
-  // Crear datos de prueba para estadísticas
+  // Crear datos de prueba para estadisticas
   const currentDate = new Date();
   await prisma.estadistica.create({
     data: {

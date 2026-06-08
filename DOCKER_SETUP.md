@@ -1,13 +1,13 @@
 # Docker Setup - Herramientas MM
 
-Ejecuta toda la aplicación con Docker Compose sin necesidad de instalar SQL Server localmente.
+Ejecuta toda la aplicacion con Docker Compose sin necesidad de instalar SQL Server localmente.
 
 ## Requisitos
 
 - Docker Desktop instalado
 - 4GB RAM disponible
 
-## Inicio Rápido
+## Inicio Rapido
 
 ### 1. Iniciar servicios
 
@@ -15,13 +15,13 @@ Ejecuta toda la aplicación con Docker Compose sin necesidad de instalar SQL Ser
 docker-compose up -d
 ```
 
-### 2. Esperar a que SQL Server esté listo (30-60 segundos)
+### 2. Esperar a que SQL Server este listo (30-60 segundos)
 
 ```bash
 docker-compose logs -f sqlserver
 ```
 
-Cuando veas "Server is ready to accept connection requests", continúa.
+Cuando veas "Server is ready to accept connection requests", continua.
 
 ### 3. Inicializar base de datos
 
@@ -40,7 +40,7 @@ Abre http://localhost:3000
 
 ---
 
-## Comandos Útiles
+## Comandos utiles
 
 ### Ver logs
 
@@ -96,7 +96,7 @@ docker-compose down -v
 ### ❌ "Cannot connect to database"
 
 ```bash
-# Ver si SQL Server está corriendo
+# Ver si SQL Server esta corriendo
 docker-compose ps
 
 # Ver logs de SQL Server
@@ -123,7 +123,7 @@ docker-compose exec app npm install
 
 ### ❌ Build muy lento
 
-Agregar a `.dockerignore` más archivos innecesarios.
+Agregar a `.dockerignore` mas archivos innecesarios.
 
 ---
 
@@ -151,7 +151,7 @@ Abre http://localhost:5555
 
 ---
 
-## Build para Producción
+## Build para Produccion
 
 ### Crear imagen
 
@@ -159,7 +159,7 @@ Abre http://localhost:5555
 docker build -t herramientas-mm:latest .
 ```
 
-### Correr en producción
+### Correr en produccion
 
 ```bash
 docker run -p 3000:3000 \
@@ -210,7 +210,7 @@ docker push xxx.dkr.ecr.us-east-1.amazonaws.com/herramientas-mm:latest
 
 - SQL Server en Docker usa Express Edition (gratis)
 - Almacenamiento en Docker es local (pierdes datos al `docker-compose down -v`)
-- Para producción, usar Azure SQL Database o servidor dedicado
+- Para produccion, usar Azure SQL Database o servidor dedicado
 - Cambiar contraseña SQL Server en `docker-compose.yml` (NO usar "YourPassword123!")
 
 ¡Listo! 🐳

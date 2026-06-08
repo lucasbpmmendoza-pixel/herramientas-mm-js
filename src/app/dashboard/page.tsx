@@ -96,7 +96,7 @@ export default function DashboardPage() {
                 }}
                 className="rounded bg-red-500 px-3 py-1 text-sm text-white hover:bg-red-600 transition"
               >
-                Cerrar Sesión
+                Cerrar Sesion
               </button>
             </div>
           </div>
@@ -129,7 +129,7 @@ export default function DashboardPage() {
           <div className="rounded-lg bg-white p-6 shadow">
             <h2 className="text-lg font-semibold text-gray-900">Bienvenido</h2>
             <p className="mt-2 text-gray-600">
-              Panel de Administración de Colaboradores
+              Panel de Administracion de Colaboradores
             </p>
           </div>
 
@@ -150,7 +150,7 @@ export default function DashboardPage() {
 
         {/* Features */}
         <div className="mt-8">
-          <h2 className="text-xl font-bold text-gray-900">Módulos Disponibles</h2>
+          <h2 className="text-xl font-bold text-gray-900">Modulos Disponibles</h2>
           <div className="mt-4 grid gap-6 md:grid-cols-2">
             {user.isAdmin && (
                 <a
@@ -173,11 +173,11 @@ export default function DashboardPage() {
                   className="block rounded-lg border-l-4 border-violet-500 bg-gradient-to-r from-violet-50 to-violet-50 p-6 shadow hover:shadow-lg transition"
                 >
                   <h3 className="flex items-center gap-2 font-semibold text-violet-900">
-                    <img src="/icons/estadisticas.png" className="h-6 w-6" alt="Estadísticas" />
-                    Estadísticas
+                    <img src="/icons/estadisticas.png" className="h-6 w-6" alt="Estadisticas" />
+                    Estadisticas
                   </h3>
                   <p className="mt-2 text-sm text-violet-700">
-                    Visualiza reportes y estadísticas de colaboradores
+                    Visualiza reportes y estadisticas de colaboradores
                   </p>
                 </a>
             )}

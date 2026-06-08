@@ -1,4 +1,4 @@
-# Configuración Azure SQL Database
+# Configuracion Azure SQL Database
 
 ## Paso 1: Crear Azure SQL Database
 
@@ -9,37 +9,37 @@
 3. Buscar "SQL Database"
 4. Hacer click en "Crear"
 
-### Configuración Básica
+### Configuracion Basica
 
 - **Nombre de la BD**: `herramientas-mm`
-- **Suscripción**: Seleccionar tu suscripción
+- **Suscripcion**: Seleccionar tu suscripcion
 - **Grupo de recursos**: Crear uno nuevo o seleccionar existente
 - **Servidor**: Crear nuevo servidor SQL
-  - **Nombre del servidor**: `tu-servidor-mm` (único globalmente)
-  - **Ubicación**: Seleccionar región cercana
-  - **Autenticación**: SQL Server authentication
+  - **Nombre del servidor**: `tu-servidor-mm` (unico globalmente)
+  - **Ubicacion**: Seleccionar region cercana
+  - **Autenticacion**: SQL Server authentication
   - **Admin login**: `mmadmin`
-  - **Contraseña**: Contraseña fuerte (mínimo 8 caracteres, con mayúsculas, números, símbolos)
+  - **Contraseña**: Contraseña fuerte (minimo 8 caracteres, con mayusculas, numeros, simbolos)
 
-### Configuración Adicional
+### Configuracion Adicional
 
 - **Proceso de datos**: Basic
 - **Almacenamiento**: 5 GB
 - **Redundancia de copia de seguridad**: Localmente redundante
 
-### Firewall y Conexión
+### Firewall y Conexion
 
-1. Después de crear, ir a "Firewall and virtual networks"
+1. Despues de crear, ir a "Firewall and virtual networks"
 2. Añadir regla de firewall:
    - **Nombre**: `AllowLocal` o `AllowYourIP`
-   - **IP inicial**: Tu dirección IP
-   - **IP final**: Tu dirección IP
+   - **IP inicial**: Tu direccion IP
+   - **IP final**: Tu direccion IP
 3. Para Azure services: Activar "Allow Azure services and resources to access this server"
 
-## Paso 2: Obtener Cadena de Conexión
+## Paso 2: Obtener Cadena de Conexion
 
 1. En el servidor SQL, ir a "Settings" > "Connection strings"
-2. Copiar la conexión para SQL Server (ADO.NET):
+2. Copiar la conexion para SQL Server (ADO.NET):
 
 ```
 Server=tcp:xxx.database.windows.net,1433;Initial Catalog=xxx;Persist Security Info=False;User ID=xxx;Password={your_password};Encrypt=True;Connection Timeout=30;Authentication=Active Directory Default;
@@ -53,7 +53,7 @@ Reemplazar:
 
 ## Paso 3: Configurar en .env.local
 
-Copia la conexión a `.env.local`:
+Copia la conexion a `.env.local`:
 
 ```env
 DATABASE_URL="Server=tcp:tu-servidor-mm.database.windows.net,1433;Initial Catalog=herramientas-mm;Persist Security Info=False;User ID=mmadmin;Password=tuContraseña;Encrypt=True;Connection Timeout=30;Authentication=Active Directory Default;"
@@ -61,7 +61,7 @@ DATABASE_URL="Server=tcp:tu-servidor-mm.database.windows.net,1433;Initial Catalo
 
 ## Paso 4: Acceso Seguro
 
-### Autenticación Azure AD Recomendada
+### Autenticacion Azure AD Recomendada
 
 1. En Azure Portal, ir a tu servidor SQL
 2. Set Azure AD admin:
@@ -99,7 +99,7 @@ DATABASE_URL="Server=tcp:tu-servidor-mm.database.windows.net,1433;Initial Catalo
 
 ### Error: "Connection timeout"
 - Verificar firewall de tu red
-- Intentar conexión desde máquina local primero
+- Intentar conexion desde maquina local primero
 - Revisar logs de Azure Portal
 
 ## Monitoreo y Escalabilidad
@@ -107,17 +107,17 @@ DATABASE_URL="Server=tcp:tu-servidor-mm.database.windows.net,1433;Initial Catalo
 ### Performance Insights
 1. Azure Portal > SQL Database > Performance Insights
 2. Monitorear queries lentas
-3. Optimizar índices si es necesario
+3. Optimizar indices si es necesario
 
 ### Escalabilidad
-- Cambiar DTU (performance tier) según demanda
-- De Basic (5 DTU) a Standard/Premium según necesario
+- Cambiar DTU (performance tier) segun demanda
+- De Basic (5 DTU) a Standard/Premium segun necesario
 - Revisar costos antes de cambios
 
 ## Copias de Seguridad
 
-Automáticas:
-- 7 días de retención (Basic)
+Automaticas:
+- 7 dias de retencion (Basic)
 - Configurar en "Backup retention"
 
 Manuales:
@@ -131,6 +131,6 @@ az sql db export --resource-group mygroup --server myserver \
 
 ## Referencias
 
-- [Documentación Azure SQL](https://learn.microsoft.com/es-es/azure/azure-sql/)
+- [Documentacion Azure SQL](https://learn.microsoft.com/es-es/azure/azure-sql/)
 - [Prisma Azure SQL](https://www.prisma.io/docs/concepts/database-connectors/sql-server)
 - [Connection Strings](https://learn.microsoft.com/es-es/dotnet/framework/data/adonet/connection-string-syntax)

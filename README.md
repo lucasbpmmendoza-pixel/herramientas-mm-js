@@ -1,13 +1,13 @@
 # Herramientas MM - Panel Administrativo
 
-Panel Administrativo de Colaboradores - Versión JavaScript/Next.js con Azure SQL
+Panel Administrativo de Colaboradores - Version JavaScript/Next.js con Azure SQL
 
-## Características
+## Caracteristicas
 
-- ✅ Autenticación por NIP
-- ✅ Gestión de Colaboradores
-- ✅ Estadísticas y Reportes
-- ✅ Gestión de Permisos y Vacaciones
+- ✅ Autenticacion por NIP
+- ✅ Gestion de Colaboradores
+- ✅ Estadisticas y Reportes
+- ✅ Gestion de Permisos y Vacaciones
 - ✅ Interfaz Responsiva (Tailwind CSS)
 - ✅ Base de datos Azure SQL
 - ✅ Deployable en Vercel/Netlify
@@ -19,7 +19,7 @@ Panel Administrativo de Colaboradores - Versión JavaScript/Next.js con Azure SQ
 - Cuenta de Azure SQL Database
 - Cuenta de Vercel o Netlify (para deployment)
 
-## Instalación Local
+## Instalacion Local
 
 ### 1. Clonar el repositorio
 
@@ -77,16 +77,16 @@ Abre [http://localhost:3000](http://localhost:3000)
 src/
 ├── app/
 │   ├── api/              # API Routes
-│   │   ├── auth/         # Autenticación
-│   │   ├── users/        # Gestión de usuarios
-│   │   └── estadisticas/ # Estadísticas
-│   ├── auth/             # Páginas de autenticación
+│   │   ├── auth/         # Autenticacion
+│   │   ├── users/        # Gestion de usuarios
+│   │   └── estadisticas/ # Estadisticas
+│   ├── auth/             # Paginas de autenticacion
 │   ├── dashboard/        # Dashboard principal
 │   ├── layout.tsx        # Layout global
-│   └── page.tsx          # Página de inicio
+│   └── page.tsx          # Pagina de inicio
 ├── components/           # Componentes React
 ├── lib/                  # Utilidades y helpers
-│   ├── auth.ts          # Autenticación JWT
+│   ├── auth.ts          # Autenticacion JWT
 │   └── api-client.ts    # Cliente HTTP
 ├── types/               # Tipos TypeScript
 └── styles/              # Estilos CSS
@@ -96,7 +96,7 @@ src/
 
 ### Netlify
 
-#### Opción 1: CLI
+#### Opcion 1: CLI
 
 ```bash
 npm install -g netlify-cli
@@ -104,12 +104,12 @@ netlify login
 netlify init
 ```
 
-#### Opción 2: GitHub
+#### Opcion 2: GitHub
 
 1. Push a GitHub
 2. Conecta repositorio en [Netlify Dashboard](https://app.netlify.com)
 3. Configura variables de entorno en Netlify
-4. Deploy automático en cada push
+4. Deploy automatico en cada push
 
 **netlify.toml:**
 ```toml
@@ -120,7 +120,7 @@ functions = "dist/functions"
 
 ### Vercel
 
-#### Opción 1: CLI
+#### Opcion 1: CLI
 
 ```bash
 npm install -g vercel
@@ -128,12 +128,12 @@ vercel login
 vercel
 ```
 
-#### Opción 2: GitHub
+#### Opcion 2: GitHub
 
 1. Push a GitHub
 2. Importa en [Vercel Dashboard](https://vercel.com/import)
 3. Configura Environment Variables
-4. Deploy automático en cada push
+4. Deploy automatico en cada push
 
 **vercel.json:**
 ```json
@@ -168,17 +168,17 @@ jobs:
 
 ## Variables de Entorno Requeridas
 
-| Variable | Descripción | Ejemplo |
+| Variable | Descripcion | Ejemplo |
 |----------|-------------|---------|
-| `DATABASE_URL` | Conexión Azure SQL | `Server=tcp:...` |
+| `DATABASE_URL` | Conexion Azure SQL | `Server=tcp:...` |
 | `NEXTAUTH_URL` | URL de la app | `https://tuapp.vercel.app` |
 | `NEXTAUTH_SECRET` | Secret NextAuth | `openssl rand -base64 32` |
 | `JWT_SECRET` | Secret JWT | Contraseña aleatoria |
 
 ## API Endpoints
 
-### Autenticación
-- `POST /api/auth/login` - Iniciar sesión con NIP
+### Autenticacion
+- `POST /api/auth/login` - Iniciar sesion con NIP
 
 ### Usuarios
 - `GET /api/users` - Listar colaboradores (solo admin)
@@ -186,20 +186,20 @@ jobs:
 - `PUT /api/users/[id]` - Actualizar usuario (solo admin)
 - `DELETE /api/users/[id]` - Eliminar usuario (solo admin)
 
-### Estadísticas
-- `GET /api/estadisticas` - Obtener estadísticas
-- `POST /api/estadisticas` - Crear estadística (solo admin)
-- `PUT /api/estadisticas/[id]` - Actualizar estadística
-- `DELETE /api/estadisticas/[id]` - Eliminar estadística
+### Estadisticas
+- `GET /api/estadisticas` - Obtener estadisticas
+- `POST /api/estadisticas` - Crear estadistica (solo admin)
+- `PUT /api/estadisticas/[id]` - Actualizar estadistica
+- `DELETE /api/estadisticas/[id]` - Eliminar estadistica
 
 ## Troubleshooting
 
 ### Error: No User 'sa' in SQL Server
-Asegúrate que tu cadena de conexión Azure SQL sea correcta y que el usuario exista.
+Asegurate que tu cadena de conexion Azure SQL sea correcta y que el usuario exista.
 
 ### Error: Cannot connect to database
 - Verifica que la firewall de Azure SQL permite tu IP
-- Comprueba que `DATABASE_URL` está configurado
+- Comprueba que `DATABASE_URL` esta configurado
 - Ejecuta `npm run generate:prisma`
 
 ### Error: Port 3000 already in use
@@ -217,7 +217,7 @@ npm run dev -- -p 3001
 
 ## Licencia
 
-Este proyecto está bajo licencia MIT.
+Este proyecto esta bajo licencia MIT.
 
 ## Soporte
 

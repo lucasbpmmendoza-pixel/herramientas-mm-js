@@ -258,14 +258,14 @@ export default function VacacionesPage() {
                 )}
                 {selectedUser && (
                   <p className="mt-1 text-sm text-gray-500">
-                    Días disponibles: <strong>{selectedUser.diasVacaciones - selectedUser.diasVacUsados}</strong> de {selectedUser.diasVacaciones}
+                    Dias disponibles: <strong>{selectedUser.diasVacaciones - selectedUser.diasVacUsados}</strong> de {selectedUser.diasVacaciones}
                   </p>
                 )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Días hábiles solicitados</label>
+                <label className="block text-sm font-medium text-gray-700">Dias habiles solicitados</label>
                 <div className="mt-1 rounded-lg bg-indigo-50 px-3 py-2 text-lg font-bold text-indigo-700">
-                  {form.diasTotal} días
+                  {form.diasTotal} dias
                 </div>
               </div>
               <div>
@@ -297,11 +297,11 @@ export default function VacacionesPage() {
                     onChange={(e) => setForm({ ...form, sabadoLaboral: e.target.checked })}
                     className="rounded border-gray-300"
                   />
-                  Sábado laboral (+1 día)
+                  Sabado laboral (+1 dia)
                 </label>
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700">Descripción</label>
+                <label className="block text-sm font-medium text-gray-700">Descripcion</label>
                 <textarea
                   value={form.descripcion}
                   onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
@@ -324,7 +324,7 @@ export default function VacacionesPage() {
           <div className="relative">
             <input
               type="text"
-              placeholder="Buscar por nombre o descripción..."
+              placeholder="Buscar por nombre o descripcion..."
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               className="w-full rounded-lg border border-gray-300 px-4 py-2 pl-10 text-sm focus:border-indigo-500 focus:outline-none sm:w-80"
@@ -371,10 +371,10 @@ export default function VacacionesPage() {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Colaborador</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Período</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Días</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Periodo</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Dias</th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Disponibles</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Descripción</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Descripcion</th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Estado</th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Acciones</th>
                 </tr>

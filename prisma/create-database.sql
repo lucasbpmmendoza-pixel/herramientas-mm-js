@@ -86,7 +86,7 @@ IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_vacaciones_userId')
     CREATE INDEX [IX_vacaciones_userId] ON [dbo].[vacaciones]([userId]);
 GO
 
--- PASO 4: Crear tabla de estadísticas
+-- PASO 4: Crear tabla de estadisticas
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'estadisticas')
 BEGIN
     CREATE TABLE [dbo].[estadisticas] (
@@ -114,7 +114,7 @@ IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_estadisticas_userId')
     CREATE INDEX [IX_estadisticas_userId] ON [dbo].[estadisticas]([userId]);
 GO
 
--- PASO 5: Crear tabla de auditoría
+-- PASO 5: Crear tabla de auditoria
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'audit_logs')
 BEGIN
     CREATE TABLE [dbo].[audit_logs] (

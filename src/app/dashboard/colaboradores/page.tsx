@@ -137,7 +137,7 @@ export default function ColaboradoresPage() {
   const [showModalPermisosForm, setShowModalPermisosForm] = useState(false);
   const [modalVacForm, setModalVacForm] = useState({ fechaInicio: "", fechaFin: "", descripcion: "", diasTotal: 1 });
   const [modalPermisosForm, setModalPermisosForm] = useState({
-    tipoPermiso: "CITA MÉDICA", esMismoDia: false, fechaInicio: "", fechaFin: "",
+    tipoPermiso: "CITA MeDICA", esMismoDia: false, fechaInicio: "", fechaFin: "",
     horaInicio: "", horaFin: "", descripcion: "", motivoOtro: "",
   });
   const [modalIncForm, setModalIncForm] = useState({
@@ -196,7 +196,7 @@ export default function ColaboradoresPage() {
   };
 
   const handleBaja = async (id: string, name: string) => {
-    if (!confirm(`¿Estás seguro de dar de baja a ${name}?`)) return;
+    if (!confirm(`¿Estas seguro de dar de baja a ${name}?`)) return;
     try {
       const res = await authFetch(`/api/users?id=${id}`, { method: "DELETE" });
       const data = await res.json();
@@ -343,7 +343,7 @@ export default function ColaboradoresPage() {
       if (data.success) {
         setSuccessMsg("Permiso registrado");
         setShowModalPermisosForm(false);
-        setModalPermisosForm({ tipoPermiso: "CITA MÉDICA", esMismoDia: false, fechaInicio: "", fechaFin: "", horaInicio: "", horaFin: "", descripcion: "", motivoOtro: "" });
+        setModalPermisosForm({ tipoPermiso: "CITA MeDICA", esMismoDia: false, fechaInicio: "", fechaFin: "", horaInicio: "", horaFin: "", descripcion: "", motivoOtro: "" });
         handleOpenPermisosModal(userId);
         setTimeout(() => setSuccessMsg(""), 3000);
       } else { setError(data.error); }
@@ -552,7 +552,7 @@ export default function ColaboradoresPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">NIP (4 dígitos) *</label>
+                <label className="block text-sm font-medium text-gray-700">NIP (4 digitos) *</label>
                 <input
                   type="text"
                   value={form.nip}
@@ -587,12 +587,12 @@ export default function ColaboradoresPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Área</label>
+                <label className="block text-sm font-medium text-gray-700">area</label>
                 <input
                   type="text"
                   value={form.area}
                   onChange={(e) => setForm({ ...form, area: e.target.value })}
-                  placeholder="Ej: Ventas, Administración..."
+                  placeholder="Ej: Ventas, Administracion..."
                   className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none"
                 />
               </div>
@@ -607,7 +607,7 @@ export default function ColaboradoresPage() {
                   <option value="PRIMARIA">Primaria</option>
                   <option value="SECUNDARIA">Secundaria</option>
                   <option value="PREPARATORIA">Preparatoria</option>
-                  <option value="TECNICO">Técnico</option>
+                  <option value="TECNICO">Tecnico</option>
                   <option value="LICENCIATURA">Licenciatura</option>
                   <option value="POSGRADO">Posgrado</option>
                 </select>
@@ -624,7 +624,7 @@ export default function ColaboradoresPage() {
                   <option value="CASADO">Casado/a</option>
                   <option value="DIVORCIADO">Divorciado/a</option>
                   <option value="VIUDO">Viudo/a</option>
-                  <option value="UNION_LIBRE">Unión libre</option>
+                  <option value="UNION_LIBRE">Union libre</option>
                 </select>
               </div>
               <div>
@@ -656,12 +656,12 @@ export default function ColaboradoresPage() {
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700">Resp. Comunicación</label>
+                <label className="block text-sm font-medium text-gray-700">Resp. Comunicacion</label>
                 <textarea
                   value={form.respuestaComunicacion}
                   onChange={(e) => setForm({ ...form, respuestaComunicacion: e.target.value })}
                   rows={2}
-                  placeholder="Respuesta de comunicación..."
+                  placeholder="Respuesta de comunicacion..."
                   className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none"
                 />
               </div>
@@ -716,7 +716,7 @@ export default function ColaboradoresPage() {
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{user.email}</td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                      {user.diasVacaciones - user.diasVacUsados} / {user.diasVacaciones} días
+                      {user.diasVacaciones - user.diasVacUsados} / {user.diasVacaciones} dias
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm">
                       <span className={`font-medium ${user.totalRetardos > 0 ? "text-yellow-600" : "text-gray-400"}`}>
@@ -819,7 +819,7 @@ export default function ColaboradoresPage() {
                               </select>
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-500">Área</label>
+                              <label className="block text-xs font-medium text-gray-500">area</label>
                               <input type="text" value={editForm.area} onChange={(e) => setEditForm({ ...editForm, area: e.target.value })} className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
                             </div>
                             <div>
@@ -829,7 +829,7 @@ export default function ColaboradoresPage() {
                                 <option value="PRIMARIA">Primaria</option>
                                 <option value="SECUNDARIA">Secundaria</option>
                                 <option value="PREPARATORIA">Preparatoria</option>
-                                <option value="TECNICO">Técnico</option>
+                                <option value="TECNICO">Tecnico</option>
                                 <option value="LICENCIATURA">Licenciatura</option>
                                 <option value="POSGRADO">Posgrado</option>
                               </select>
@@ -842,7 +842,7 @@ export default function ColaboradoresPage() {
                                 <option value="CASADO">Casado/a</option>
                                 <option value="DIVORCIADO">Divorciado/a</option>
                                 <option value="VIUDO">Viudo/a</option>
-                                <option value="UNION_LIBRE">Unión libre</option>
+                                <option value="UNION_LIBRE">Union libre</option>
                               </select>
                             </div>
                             <div>
@@ -854,7 +854,7 @@ export default function ColaboradoresPage() {
                               <input type="date" value={editForm.antiguedadAnios} onChange={(e) => setEditForm({ ...editForm, antiguedadAnios: e.target.value })} className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-500">Días Vacaciones</label>
+                              <label className="block text-xs font-medium text-gray-500">Dias Vacaciones</label>
                               <input type="number" min={0} value={editForm.diasVacaciones} onChange={(e) => setEditForm({ ...editForm, diasVacaciones: parseInt(e.target.value) || 0 })} className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
                             </div>
                             <div className="sm:col-span-2">
@@ -862,7 +862,7 @@ export default function ColaboradoresPage() {
                               <textarea value={editForm.respuestaMentalidad} onChange={(e) => setEditForm({ ...editForm, respuestaMentalidad: e.target.value })} rows={2} className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
                             </div>
                             <div className="sm:col-span-2">
-                              <label className="block text-xs font-medium text-gray-500">Resp. Comunicación</label>
+                              <label className="block text-xs font-medium text-gray-500">Resp. Comunicacion</label>
                               <textarea value={editForm.respuestaComunicacion} onChange={(e) => setEditForm({ ...editForm, respuestaComunicacion: e.target.value })} rows={2} className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
                             </div>
                           </div>
@@ -883,7 +883,7 @@ export default function ColaboradoresPage() {
                             <p className="text-sm font-medium text-gray-900">{user.sexo || "—"}</p>
                           </div>
                           <div className="rounded-lg border border-purple-200 bg-white p-2">
-                            <span className="text-xs font-medium uppercase text-gray-500">Área</span>
+                            <span className="text-xs font-medium uppercase text-gray-500">area</span>
                             <p className="text-sm font-medium text-gray-900">{user.area || "—"}</p>
                           </div>
                           <div className="rounded-lg border border-purple-200 bg-white p-2">
@@ -916,7 +916,7 @@ export default function ColaboradoresPage() {
                           >
                             <span className="text-xs font-medium uppercase text-gray-500 group-hover:text-blue-200">Vacaciones</span>
                             <p className="text-sm font-medium text-gray-900 group-hover:text-white">
-                              {user.diasVacaciones - user.diasVacUsados} / {user.diasVacaciones} días
+                              {user.diasVacaciones - user.diasVacUsados} / {user.diasVacaciones} dias
                             </p>
                             <span className="text-xs text-blue-600 group-hover:text-blue-200">Ver / Agregar →</span>
                           </button>
@@ -942,20 +942,20 @@ export default function ColaboradoresPage() {
                           </button>
                           {user.analisisNumerologia && (
                             <div className="rounded-lg border border-purple-200 bg-white p-2 lg:col-span-4 sm:col-span-2">
-                              <span className="text-xs font-medium uppercase text-gray-500">Análisis Numerología</span>
+                              <span className="text-xs font-medium uppercase text-gray-500">Analisis Numerologia</span>
                               <p className="whitespace-pre-wrap text-sm text-gray-900">{user.analisisNumerologia}</p>
                             </div>
                           )}
                         </div>
 
-                        {/* Respuestas psicométricas */}
+                        {/* Respuestas psicometricas */}
                         <div className="mt-4 grid gap-3 sm:grid-cols-2">
                           <div className="rounded-lg border border-purple-200 bg-white p-3">
                             <span className="text-xs font-medium uppercase text-gray-500">Resp. Mentalidad</span>
                             <p className="mt-1 text-sm text-gray-900">{user.respuestaMentalidad || "—"}</p>
                           </div>
                           <div className="rounded-lg border border-purple-200 bg-white p-3">
-                            <span className="text-xs font-medium uppercase text-gray-500">Resp. Comunicación</span>
+                            <span className="text-xs font-medium uppercase text-gray-500">Resp. Comunicacion</span>
                             <p className="mt-1 text-sm text-gray-900">{user.respuestaComunicacion || "—"}</p>
                           </div>
                         </div>
@@ -1001,7 +1001,7 @@ export default function ColaboradoresPage() {
                             <div className="text-xl font-bold text-red-700">
                               {faltas.reduce((acc, f) => acc + f.dias, 0)}
                             </div>
-                            <div className="text-xs text-red-600">Días de inasistencia total</div>
+                            <div className="text-xs text-red-600">Dias de inasistencia total</div>
                           </div>
                         </div>
 
@@ -1044,7 +1044,7 @@ export default function ColaboradoresPage() {
                                 </div>
                               ) : (
                                 <div>
-                                  <label className="block text-xs font-medium text-gray-700">Días</label>
+                                  <label className="block text-xs font-medium text-gray-700">Dias</label>
                                   <input
                                     type="number"
                                     value={incForm.dias}
@@ -1060,7 +1060,7 @@ export default function ColaboradoresPage() {
                                   type="text"
                                   value={incForm.descripcion}
                                   onChange={(e) => setIncForm({ ...incForm, descripcion: e.target.value })}
-                                  placeholder="Ej: Llegó 15 min tarde..."
+                                  placeholder="Ej: Llego 15 min tarde..."
                                   className="mt-1 w-full rounded-lg border border-gray-300 px-2 py-1.5 text-sm focus:border-indigo-500 focus:outline-none"
                                 />
                               </div>
@@ -1082,7 +1082,7 @@ export default function ColaboradoresPage() {
                                   <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Tipo</th>
                                   <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Fecha</th>
                                   <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Detalle</th>
-                                  <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Descripción</th>
+                                  <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Descripcion</th>
                                   <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Acciones</th>
                                 </tr>
                               </thead>
@@ -1100,7 +1100,7 @@ export default function ColaboradoresPage() {
                                       {formatDateOnlyEsMx(inc.fecha)}
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-700">
-                                      {inc.tipo === "RETARDO" ? `${inc.minutos} min` : `${inc.dias} día(s)`}
+                                      {inc.tipo === "RETARDO" ? `${inc.minutos} min` : `${inc.dias} dia(s)`}
                                     </td>
                                     <td className="max-w-xs truncate px-3 py-2 text-sm text-gray-500">
                                       {inc.descripcion || "—"}
@@ -1149,7 +1149,7 @@ export default function ColaboradoresPage() {
           return new Date(y, m - 1, d);
         };
 
-        // Días usados en el período actual (último aniversario → hoy), solo APROBADO
+        // Dias usados en el periodo actual (ultimo aniversario → hoy), solo APROBADO
         const diasUsadosPeriodo = lastAnniversary
           ? modalVacaciones
               .filter((v) => v.estado === "APROBADO" && parseLocal(v.fechaInicio) >= lastAnniversary)
@@ -1194,7 +1194,7 @@ export default function ColaboradoresPage() {
               <div className="max-h-[70vh] overflow-y-auto p-6">
                 {modalUser && lastAnniversary && (
                   <div className="mb-3 flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 text-xs text-gray-600">
-                    <span>Período actual:</span>
+                    <span>Periodo actual:</span>
                     <span className="font-semibold text-purple-700">{lastAnniversary.toLocaleDateString("es-MX")}</span>
                     <span>→</span>
                     <span className="font-semibold text-gray-700">{today.toLocaleDateString("es-MX")}</span>
@@ -1204,15 +1204,15 @@ export default function ColaboradoresPage() {
                   <div className="mb-4 rounded-lg bg-purple-50 p-3 flex gap-4">
                     <div className="text-center">
                       <div className={`text-2xl font-bold ${diasDisponibles < 0 ? "text-red-600" : "text-purple-700"}`}>{diasDisponibles}</div>
-                      <div className="text-xs text-purple-600">Días disponibles</div>
+                      <div className="text-xs text-purple-600">Dias disponibles</div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-gray-700">{modalUser.diasVacaciones}</div>
-                      <div className="text-xs text-gray-500">Días del período</div>
+                      <div className="text-xs text-gray-500">Dias del periodo</div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-gray-500">{diasUsadosPeriodo}</div>
-                      <div className="text-xs text-gray-400">Días usados en período</div>
+                      <div className="text-xs text-gray-400">Dias usados en periodo</div>
                     </div>
                   </div>
                 )}
@@ -1233,13 +1233,13 @@ export default function ColaboradoresPage() {
                           className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-purple-500 focus:outline-none" />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-700">Días Totales *</label>
+                        <label className="block text-xs font-medium text-gray-700">Dias Totales *</label>
                         <input type="number" required min={1} value={modalVacForm.diasTotal}
                           onChange={(e) => setModalVacForm({ ...modalVacForm, diasTotal: parseInt(e.target.value) || 1 })}
                           className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-purple-500 focus:outline-none" />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-700">Descripción</label>
+                        <label className="block text-xs font-medium text-gray-700">Descripcion</label>
                         <input type="text" value={modalVacForm.descripcion}
                           onChange={(e) => setModalVacForm({ ...modalVacForm, descripcion: e.target.value })}
                           placeholder="Opcional..."
@@ -1260,9 +1260,9 @@ export default function ColaboradoresPage() {
                               <tr>
                                 <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Inicio</th>
                                 <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Fin</th>
-                                <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Días</th>
+                                <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Dias</th>
                                 <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Estado</th>
-                                <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Descripción</th>
+                                <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Descripcion</th>
                               </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 bg-white">
@@ -1347,7 +1347,7 @@ export default function ColaboradoresPage() {
                   </div>
                   <div className="rounded-lg bg-red-50 p-2 text-center">
                     <div className="text-xl font-bold text-red-700">{mFaltas.reduce((a, f) => a + f.dias, 0)}</div>
-                    <div className="text-xs text-red-600">Días totales</div>
+                    <div className="text-xs text-red-600">Dias totales</div>
                   </div>
                 </div>
                 {showModalIncForm && (
@@ -1377,7 +1377,7 @@ export default function ColaboradoresPage() {
                         </div>
                       ) : (
                         <div>
-                          <label className="block text-xs font-medium text-gray-700">Días</label>
+                          <label className="block text-xs font-medium text-gray-700">Dias</label>
                           <input type="number" min={1} value={modalIncForm.dias}
                             onChange={(e) => setModalIncForm({ ...modalIncForm, dias: parseInt(e.target.value) || 1 })}
                             className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-indigo-500 focus:outline-none" />
@@ -1387,7 +1387,7 @@ export default function ColaboradoresPage() {
                         <label className="block text-xs font-medium text-gray-700">Detalles</label>
                         <input type="text" value={modalIncForm.descripcion}
                           onChange={(e) => setModalIncForm({ ...modalIncForm, descripcion: e.target.value })}
-                          placeholder="Ej: Llegó 15 min tarde..."
+                          placeholder="Ej: Llego 15 min tarde..."
                           className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-indigo-500 focus:outline-none" />
                       </div>
                     </div>
@@ -1406,7 +1406,7 @@ export default function ColaboradoresPage() {
                                 <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Tipo</th>
                                 <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Fecha</th>
                                 <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Detalle</th>
-                                <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Descripción</th>
+                                <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Descripcion</th>
                                 <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">Acciones</th>
                               </tr>
                             </thead>
@@ -1419,7 +1419,7 @@ export default function ColaboradoresPage() {
                                     }`}>{inc.tipo}</span>
                                   </td>
                                   <td className="whitespace-nowrap px-3 py-2">{formatDateOnlyEsMx(inc.fecha)}</td>
-                                  <td className="whitespace-nowrap px-3 py-2">{inc.tipo === "RETARDO" ? `${inc.minutos} min` : `${inc.dias} día(s)`}</td>
+                                  <td className="whitespace-nowrap px-3 py-2">{inc.tipo === "RETARDO" ? `${inc.minutos} min` : `${inc.dias} dia(s)`}</td>
                                   <td className="max-w-xs truncate px-3 py-2 text-gray-500">{inc.descripcion || "—"}</td>
                                   <td className="whitespace-nowrap px-3 py-2">
                                     <button onClick={() => handleDeleteModalInc(inc.id, showFaltasModal!)} className="text-red-500 hover:text-red-700 text-xs">Eliminar</button>
@@ -1444,7 +1444,7 @@ export default function ColaboradoresPage() {
       {/* Modal Permisos */}
       {showPermisosModal && (() => {
         const modalUser = users.find((u) => u.id === showPermisosModal);
-        const TIPOS = ["CITA MÉDICA", "TRÁMITE PERSONAL", "EVENTO", "REUNIÓN", "OTRO"];
+        const TIPOS = ["CITA MeDICA", "TRaMITE PERSONAL", "EVENTO", "REUNIoN", "OTRO"];
         const permisosAnioActual = modalPermisos.filter((p) => getYearFromDateOnly(p.fechaInicio) === currentYear);
         const pendientes = permisosAnioActual.filter((p) => p.estado === "PENDIENTE").length;
         const aprobados = permisosAnioActual.filter((p) => p.estado === "APROBADO").length;
@@ -1526,7 +1526,7 @@ export default function ColaboradoresPage() {
                           <input type="checkbox" checked={modalPermisosForm.esMismoDia}
                             onChange={(e) => setModalPermisosForm({ ...modalPermisosForm, esMismoDia: e.target.checked })}
                             className="rounded border-gray-300" />
-                          Permiso por horas (mismo día)
+                          Permiso por horas (mismo dia)
                         </label>
                       </div>
                       <div>
@@ -1563,7 +1563,7 @@ export default function ColaboradoresPage() {
                         <label className="block text-xs font-medium text-gray-700">Descripcion / Motivo *</label>
                         <textarea required value={modalPermisosForm.descripcion}
                           onChange={(e) => setModalPermisosForm({ ...modalPermisosForm, descripcion: e.target.value })}
-                          rows={2} placeholder="Ej: Cita médica de 4-7PM"
+                          rows={2} placeholder="Ej: Cita medica de 4-7PM"
                           className="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:outline-none" />
                       </div>
                     </div>

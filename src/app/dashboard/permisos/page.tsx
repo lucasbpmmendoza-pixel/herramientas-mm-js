@@ -26,7 +26,7 @@ interface Permiso {
   createdAt: string;
 }
 
-const TIPOS_PERMISO = ["CITA MÉDICA", "TRÁMITE PERSONAL", "EVENTO", "REUNIÓN", "OTRO"];
+const TIPOS_PERMISO = ["CITA MeDICA", "TRaMITE PERSONAL", "EVENTO", "REUNIoN", "OTRO"];
 
 export default function PermisosPage() {
   const [permisos, setPermisos] = useState<Permiso[]>([]);
@@ -39,7 +39,7 @@ export default function PermisosPage() {
   const [busqueda, setBusqueda] = useState("");
   const [form, setForm] = useState({
     userId: "",
-    tipoPermiso: "CITA MÉDICA",
+    tipoPermiso: "CITA MeDICA",
     esMismoDia: false,
     fechaInicio: "",
     fechaFin: "",
@@ -109,7 +109,7 @@ export default function PermisosPage() {
       if (data.success) {
         setSuccessMsg("Permiso registrado exitosamente");
         setShowForm(false);
-        setForm({ userId: currentUser?.id || "", tipoPermiso: "CITA MÉDICA", esMismoDia: false, fechaInicio: "", fechaFin: "", horaInicio: "", horaFin: "", descripcion: "", motivoOtro: "" });
+        setForm({ userId: currentUser?.id || "", tipoPermiso: "CITA MeDICA", esMismoDia: false, fechaInicio: "", fechaFin: "", horaInicio: "", horaFin: "", descripcion: "", motivoOtro: "" });
         fetchPermisos();
         setTimeout(() => setSuccessMsg(""), 3000);
       } else {
@@ -263,7 +263,7 @@ export default function PermisosPage() {
                     onChange={(e) => setForm({ ...form, esMismoDia: e.target.checked })}
                     className="rounded border-gray-300"
                   />
-                  Es permiso por horas (mismo día)
+                  Es permiso por horas (mismo dia)
                 </label>
               </div>
               <div>
@@ -315,13 +315,13 @@ export default function PermisosPage() {
                 </>
               )}
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700">Descripción / Motivo *</label>
+                <label className="block text-sm font-medium text-gray-700">Descripcion / Motivo *</label>
                 <textarea
                   value={form.descripcion}
                   onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
                   required
                   rows={3}
-                  placeholder="Ej: Tengo cita médica de 4-7PM"
+                  placeholder="Ej: Tengo cita medica de 4-7PM"
                   className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none"
                 />
               </div>
@@ -339,7 +339,7 @@ export default function PermisosPage() {
           <div className="relative">
             <input
               type="text"
-              placeholder="Buscar por nombre, tipo o descripción..."
+              placeholder="Buscar por nombre, tipo o descripcion..."
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               className="w-full rounded-lg border border-gray-300 px-4 py-2 pl-10 text-sm focus:border-indigo-500 focus:outline-none sm:w-80"
@@ -388,7 +388,7 @@ export default function PermisosPage() {
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Colaborador</th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Tipo</th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Fecha / Horario</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Descripción</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Descripcion</th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Estado</th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">Acciones</th>
                 </tr>

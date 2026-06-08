@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Panel Administrativo - Herramientas MM",
-  description: "Gestión de colaboradores y estadísticas",
+  description: "Gestion de colaboradores y estadisticas",
 };
 
 export default function RootLayout({

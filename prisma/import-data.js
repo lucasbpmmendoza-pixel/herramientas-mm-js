@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 
 // perfiles_psicometricos - Users with profile info
 const perfiles = [
-  { nombre: 'Sergio Ivanovich Rosales Marquez', nip: '9625', sexo: 'Masculino', nivelEducativo: 'universitario', area: 'IT', estadoCivil: 'soltero', respuestaMentalidad: 'Crecimiento', respuestaComunicacion: 'León y Pavo Real', antiguedadAnios: '2024-06-09', analisisNumerologia: null, diasVacaciones: 12, fechaNacimiento: '2025-03-05' },
+  { nombre: 'Sergio Ivanovich Rosales Marquez', nip: '9625', sexo: 'Masculino', nivelEducativo: 'universitario', area: 'IT', estadoCivil: 'soltero', respuestaMentalidad: 'Crecimiento', respuestaComunicacion: 'Leon y Pavo Real', antiguedadAnios: '2024-06-09', analisisNumerologia: null, diasVacaciones: 12, fechaNacimiento: '2025-03-05' },
   { nombre: 'Veronica Aidee Rivera Gonzalez', nip: '3073', sexo: 'Femenino', nivelEducativo: 'universitario', area: 'Administracion', estadoCivil: 'soltera', respuestaMentalidad: 'Crecimiento', respuestaComunicacion: 'Delfin', antiguedadAnios: '2023-10-29', analisisNumerologia: null, diasVacaciones: 8, fechaNacimiento: '1997-10-22' },
   { nombre: 'Ashley Gamboa Terrazas', nip: '3108', sexo: 'Femenino', nivelEducativo: 'universitario', area: 'Contabilidad', estadoCivil: 'soltera', respuestaMentalidad: 'Crecimiento', respuestaComunicacion: 'Buho', antiguedadAnios: '2023-02-06', analisisNumerologia: null, diasVacaciones: 8, fechaNacimiento: '1999-12-26' },
   { nombre: 'Aylen Arriaga Saenz', nip: '3724', sexo: 'Femenino', nivelEducativo: 'Preparatoria', area: 'Contabilidad', estadoCivil: 'soltera', respuestaMentalidad: 'Crecimiento', respuestaComunicacion: 'Delfin y Buho', antiguedadAnios: '2025-06-03', analisisNumerologia: null, diasVacaciones: 0, fechaNacimiento: '2007-10-13' },
@@ -23,9 +23,9 @@ const perfiles = [
   { nombre: 'Jesus Martin Olague Amavisca', nip: '8211', sexo: 'Masculino', nivelEducativo: 'universitario', area: 'Contabilidad', estadoCivil: 'soltero', respuestaMentalidad: 'Fija', respuestaComunicacion: 'Delfin y Buho', antiguedadAnios: '2023-09-18', analisisNumerologia: null, diasVacaciones: 13, fechaNacimiento: '2000-05-03' },
   { nombre: 'Carla de Aguinaga Ramirez', nip: '9945', sexo: 'Femenino', nivelEducativo: 'universitario', area: 'Administracion', estadoCivil: 'soltera', respuestaMentalidad: 'Intermedia', respuestaComunicacion: 'Delfin y Buho', antiguedadAnios: '2025-05-26', analisisNumerologia: null, diasVacaciones: 0, fechaNacimiento: '1987-02-28' },
   { nombre: 'Mauricio Mendoza', nip: '9999', sexo: 'Masculino', nivelEducativo: 'Universitario', area: 'CEO', estadoCivil: 'Casado', respuestaMentalidad: 'Crecimiento', respuestaComunicacion: 'Delfin', antiguedadAnios: '2022-01-01', analisisNumerologia: null, diasVacaciones: 0, fechaNacimiento: '1988-03-29' },
-  { nombre: 'Ana Gabriela Alvidrez Pedroza', nip: '8314', sexo: 'Femenino', nivelEducativo: 'universitario', area: 'Contabilidad', estadoCivil: 'casado', respuestaMentalidad: 'Crecimiento', respuestaComunicacion: 'León y Pavo Real', antiguedadAnios: '2025-07-17', analisisNumerologia: null, diasVacaciones: 0, fechaNacimiento: '1989-05-08' },
+  { nombre: 'Ana Gabriela Alvidrez Pedroza', nip: '8314', sexo: 'Femenino', nivelEducativo: 'universitario', area: 'Contabilidad', estadoCivil: 'casado', respuestaMentalidad: 'Crecimiento', respuestaComunicacion: 'Leon y Pavo Real', antiguedadAnios: '2025-07-17', analisisNumerologia: null, diasVacaciones: 0, fechaNacimiento: '1989-05-08' },
   { nombre: 'Alejandro Gonzalez Garcia', nip: '6821', sexo: null, nivelEducativo: null, area: 'Tecnico', estadoCivil: null, respuestaMentalidad: null, respuestaComunicacion: null, antiguedadAnios: null, analisisNumerologia: null, diasVacaciones: 0, fechaNacimiento: null },
-  { nombre: 'Nazaria Alejandra Villalobos Ramirez', nip: '8517', sexo: 'Femenino', nivelEducativo: 'bachillerato', area: 'ADMINISTRATIVO', estadoCivil: 'soltero', respuestaMentalidad: 'Crecimiento', respuestaComunicacion: 'León y Delfín', antiguedadAnios: '2025-10-02', analisisNumerologia: null, diasVacaciones: 0, fechaNacimiento: '1992-03-14' },
+  { nombre: 'Nazaria Alejandra Villalobos Ramirez', nip: '8517', sexo: 'Femenino', nivelEducativo: 'bachillerato', area: 'ADMINISTRATIVO', estadoCivil: 'soltero', respuestaMentalidad: 'Crecimiento', respuestaComunicacion: 'Leon y Delfin', antiguedadAnios: '2025-10-02', analisisNumerologia: null, diasVacaciones: 0, fechaNacimiento: '1992-03-14' },
   { nombre: 'Javier Alberto Duen Saenz', nip: '9676', sexo: null, nivelEducativo: null, area: 'Tecnico', estadoCivil: null, respuestaMentalidad: null, respuestaComunicacion: null, antiguedadAnios: null, analisisNumerologia: null, diasVacaciones: 0, fechaNacimiento: null },
   { nombre: 'Lilia Patricia Mercado Garza', nip: '6845', sexo: null, nivelEducativo: null, area: null, estadoCivil: null, respuestaMentalidad: null, respuestaComunicacion: null, antiguedadAnios: null, analisisNumerologia: null, diasVacaciones: 0, fechaNacimiento: null },
   { nombre: 'David Sanchez Gomez', nip: '9852', sexo: null, nivelEducativo: null, area: null, estadoCivil: null, respuestaMentalidad: null, respuestaComunicacion: null, antiguedadAnios: null, analisisNumerologia: null, diasVacaciones: 0, fechaNacimiento: null },
@@ -547,7 +547,7 @@ const permisosAdmin = [
   { nip: '9568', fechaInicio: '2025-07-18', fechaFin: '2025-07-18', motivo: 'EVENTO FAMILIAR', duracion: '16:00 - 18:00' },
   { nip: '8314', fechaInicio: '2025-07-23', fechaFin: '2025-07-23', motivo: 'Cita medica', duracion: '16:00 - 18:00' },
   { nip: '6724', fechaInicio: '2025-07-24', fechaFin: '2025-07-24', motivo: 'PERSONAL', duracion: '2 HRS 45 MIN' },
-  { nip: '7886', fechaInicio: '2025-08-04', fechaFin: '2025-08-04', motivo: 'Foto grupal de graduación', duracion: '13:30 - 18:00' },
+  { nip: '7886', fechaInicio: '2025-08-04', fechaFin: '2025-08-04', motivo: 'Foto grupal de graduacion', duracion: '13:30 - 18:00' },
   { nip: '6125', fechaInicio: '2025-08-04', fechaFin: '2025-08-04', motivo: 'PERSONAL', duracion: '1 dia' },
   { nip: '5693', fechaInicio: '2025-08-11', fechaFin: '2025-08-11', motivo: 'PERSONAL', duracion: '1 HORA Y MEDIA' },
   { nip: '6523', fechaInicio: '2025-08-09', fechaFin: '2025-08-09', motivo: 'platicas matrimoniales', duracion: '1 dia' },
@@ -868,7 +868,7 @@ async function main() {
         esMismoDia,
         fechaInicio,
         fechaFin: fechaFin || fechaInicio,
-        descripcion: `${p.motivo || 'Personal'} - Duración: ${p.duracion || 'N/A'}`,
+        descripcion: `${p.motivo || 'Personal'} - Duracion: ${p.duracion || 'N/A'}`,
         estado: 'APROBADO',
       },
     });
@@ -911,7 +911,7 @@ async function main() {
   console.log(`  Vacaciones (solicitudes) imported: ${vacSolCount}\n`);
   
   // ---- STEP 7: Import vacaciones historicas ----
-  console.log('--- Step 7: Importing vacaciones históricas ---');
+  console.log('--- Step 7: Importing vacaciones historicas ---');
   let vacHistCount = 0;
   
   for (const v of vacacionesHistoricas) {
@@ -928,13 +928,13 @@ async function main() {
         fechaInicio,
         fechaFin: fechaFin || fechaInicio,
         diasTotal: v.dias,
-        descripcion: 'Vacaciones históricas',
+        descripcion: 'Vacaciones historicas',
         estado: 'APROBADO',
       },
     });
     vacHistCount++;
   }
-  console.log(`  Vacaciones históricas imported: ${vacHistCount}\n`);
+  console.log(`  Vacaciones historicas imported: ${vacHistCount}\n`);
   
   // ---- STEP 8: Update totalRetardos and totalFaltas counters ----
   console.log('--- Step 8: Updating retardos/faltas counters ---');

@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
 
     const diasVacaciones = calcularDiasVacaciones(user.antiguedadAnios ? user.antiguedadAnios.toISOString() : null);
     if (diasVacaciones === 0) {
-      return NextResponse.json({ success: false, error: "Aún no has cumplido un año de servicio" }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Aun no has cumplido un año de servicio" }, { status: 400 });
     }
 
     const ultimoAniversario = getUltimoAniversario(user.antiguedadAnios);
@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
     if (diasTotal > diasDisponibles) {
       return NextResponse.json({
         success: false,
-        error: `Solo tienes ${diasDisponibles} días disponibles de vacaciones`,
+        error: `Solo tienes ${diasDisponibles} dias disponibles de vacaciones`,
       }, { status: 400 });
     }
 
@@ -156,7 +156,7 @@ export async function PUT(request: NextRequest) {
 
     const vacacion = await prisma.vacacion.findUnique({ where: { id } });
     if (!vacacion) {
-      return NextResponse.json({ success: false, error: "Vacación no encontrada" }, { status: 404 });
+      return NextResponse.json({ success: false, error: "Vacacion no encontrada" }, { status: 404 });
     }
 
     const updated = await prisma.vacacion.update({
@@ -206,7 +206,7 @@ export async function DELETE(request: NextRequest) {
     const totalUsados = aprobadas.reduce((sum, v) => sum + v.diasTotal, 0);
     await prisma.user.update({ where: { id: vacacion.userId }, data: { diasVacUsados: totalUsados } });
 
-    return NextResponse.json({ success: true, message: "Vacación eliminada" });
+    return NextResponse.json({ success: true, message: "Vacacion eliminada" });
   } catch (error) {
     console.error("Delete vacacion error:", error);
     return NextResponse.json({ success: false, error: "Error interno del servidor" }, { status: 500 });

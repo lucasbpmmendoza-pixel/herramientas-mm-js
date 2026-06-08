@@ -1,20 +1,20 @@
 /**
- * Calcula los días de vacaciones a los que tiene derecho un colaborador
- * según la ley federal del trabajo mexicana y política interna:
+ * Calcula los dias de vacaciones a los que tiene derecho un colaborador
+ * segun la ley federal del trabajo mexicana y politica interna:
  *
- * - 1er año: 12 días laborables pagados
- * - Años 2–5: +2 días por cada año subsecuente (hasta 20)
- * - A partir del año 5: +2 días por cada 5 años adicionales de servicio
+ * - 1er año: 12 dias laborables pagados
+ * - Años 2–5: +2 dias por cada año subsecuente (hasta 20)
+ * - A partir del año 5: +2 dias por cada 5 años adicionales de servicio
  *
  * Ejemplos:
- *   1 año  → 12 días
- *   2 años → 14 días
- *   3 años → 16 días
- *   4 años → 18 días
- *   5 años → 20 días
- *  10 años → 22 días
- *  15 años → 24 días
- *  20 años → 26 días
+ *   1 año  → 12 dias
+ *   2 años → 14 dias
+ *   3 años → 16 dias
+ *   4 años → 18 dias
+ *   5 años → 20 dias
+ *  10 años → 22 dias
+ *  15 años → 24 dias
+ *  20 años → 26 dias
  */
 export function calcularDiasVacaciones(antiguedadAnios: string | null | undefined): number {
   if (!antiguedadAnios) return 0; // sin fecha de ingreso registrada
@@ -28,19 +28,19 @@ export function calcularDiasVacaciones(antiguedadAnios: string | null | undefine
     años--;
   }
 
-  if (años < 1) return 0; // aún no cumple el primer año
+  if (años < 1) return 0; // aun no cumple el primer año
 
   // Años 1 a 5: 12 + 2*(años-1)
   if (años <= 5) return 12 + (años - 1) * 2;
 
-  // A partir del año 5: cada 5 años adicionales +2 días
+  // A partir del año 5: cada 5 años adicionales +2 dias
   const periodos = Math.floor((años - 5) / 5);
   return 20 + periodos * 2;
 }
 
 /**
- * Retorna la fecha del último aniversario laboral (inicio del período vacacional actual).
- * Si aún no cumple el primer año, retorna null.
+ * Retorna la fecha del ultimo aniversario laboral (inicio del periodo vacacional actual).
+ * Si aun no cumple el primer año, retorna null.
  */
 export function getUltimoAniversario(antiguedadAnios: string | Date | null | undefined): Date | null {
   if (!antiguedadAnios) return null;

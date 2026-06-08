@@ -1,6 +1,6 @@
 # API Testing - Herramientas MM
 
-Usar esta colección en Postman o similar para probar los endpoints.
+Usar esta coleccion en Postman o similar para probar los endpoints.
 
 ## 1. Login
 
@@ -37,7 +37,7 @@ Content-Type: application/json
 }
 ```
 
-Guardar el token para próximas requests.
+Guardar el token para proximas requests.
 
 ---
 
@@ -49,13 +49,13 @@ Authorization: Bearer {TOKEN}
 Content-Type: application/json
 ```
 
-**Parámetros:**
-- `page` (opcional): Número de página (default: 1)
-- `limit` (opcional): Cantidad por página (default: 10)
+**Parametros:**
+- `page` (opcional): Numero de pagina (default: 1)
+- `limit` (opcional): Cantidad por pagina (default: 10)
 
 ---
 
-## 3. Obtener Estadísticas
+## 3. Obtener Estadisticas
 
 ```
 GET http://localhost:3000/api/estadisticas?mes=1&año=2024
@@ -63,18 +63,18 @@ Authorization: Bearer {TOKEN}
 Content-Type: application/json
 ```
 
-**Parámetros:**
+**Parametros:**
 - `userId` (opcional): ID del usuario
 - `mes` (opcional): Mes (1-12)
 - `año` (opcional): Año (ej: 2024)
 
 **Nota:** 
-- Admin ve todas las estadísticas
+- Admin ve todas las estadisticas
 - Usuarios regulares solo ven las suyas
 
 ---
 
-## 4. Crear Estadística (Admin)
+## 4. Crear Estadistica (Admin)
 
 ```
 POST http://localhost:3000/api/estadisticas
@@ -104,11 +104,11 @@ Authorization: Bearer {TOKEN}
 Content-Type: application/json
 ```
 
-**Parámetros:**
+**Parametros:**
 - `userId` (opcional): ID del usuario
 - `estado` (opcional): PENDIENTE, APROBADO, RECHAZADO
-- `page` (opcional): Número de página
-- `limit` (opcional): Cantidad por página
+- `page` (opcional): Numero de pagina
+- `limit` (opcional): Cantidad por pagina
 
 ---
 
@@ -121,10 +121,10 @@ Content-Type: application/json
 
 {
   "userId": "USER_ID",
-  "tipoPermiso": "REUNIÓN",
+  "tipoPermiso": "REUNIoN",
   "fechaInicio": "2024-01-15T08:00:00Z",
   "fechaFin": "2024-01-15T09:00:00Z",
-  "descripcion": "Reunión con cliente"
+  "descripcion": "Reunion con cliente"
 }
 ```
 
@@ -161,15 +161,15 @@ Content-Type: application/json
 ## Errores Comunes
 
 ### 401 Unauthorized
-- Token expirado o inválido
-- Solución: Hacer login nuevamente
+- Token expirado o invalido
+- Solucion: Hacer login nuevamente
 
 ### 403 Forbidden
 - Usuario sin permisos para acceder recurso
 - Solo admin puede acceder a ciertos endpoints
 
 ### 400 Bad Request
-- Datos inválidos o incompletos
+- Datos invalidos o incompletos
 - Revisar estructura del JSON
 
 ### 500 Internal Server Error
@@ -182,7 +182,7 @@ Content-Type: application/json
 
 Crear nuevo collection e importar esta URL:
 ```
-[Aquí va la URL de export de Postman]
+[Aqui va la URL de export de Postman]
 ```
 
 O crear manualmente en Postman con los endpoints anteriores.
@@ -214,10 +214,10 @@ curl -X POST http://localhost:3000/api/permisos \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -d '{
     "userId": "USER_ID",
-    "tipoPermiso": "REUNIÓN",
+    "tipoPermiso": "REUNIoN",
     "fechaInicio": "2024-01-15T08:00:00Z",
     "fechaFin": "2024-01-15T09:00:00Z",
-    "descripcion": "Reunión con cliente"
+    "descripcion": "Reunion con cliente"
   }'
 ```
 
@@ -233,9 +233,9 @@ NO implementado actualmente. Considerar agregar:
 
 ## Seguridad
 
-- ✅ Autenticación JWT
+- ✅ Autenticacion JWT
 - ✅ Password hashing con bcryptjs
-- ✅ Autorización basada en roles
+- ✅ Autorizacion basada en roles
 - ❌ Rate limiting (TODO)
 - ❌ CORS configurado (TODO)
-- ❌ Validación de entrada (TODO)
+- ❌ Validacion de entrada (TODO)

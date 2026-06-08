@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
 
     const existing = await prisma.user.findUnique({ where: { nip } });
     if (existing) {
-      return NextResponse.json({ success: false, error: "El NIP ya está registrado" }, { status: 409 });
+      return NextResponse.json({ success: false, error: "El NIP ya esta registrado" }, { status: 409 });
     }
 
     // Generate email: primer nombre + iniciales de apellidos + .mmendoza@gmail.com

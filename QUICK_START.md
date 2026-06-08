@@ -7,9 +7,9 @@ Inicia el desarrollo en 5 minutos.
 - Node.js 18+
 - npm o yarn
 - Git
-- Cuenta Azure (para BD en producción)
+- Cuenta Azure (para BD en produccion)
 
-## Instalación Rápida
+## Instalacion Rapida
 
 ### 1️⃣ Clonar y Instalar
 
@@ -79,13 +79,13 @@ Contraseña: admin123
 
 ---
 
-## Estructura Rápida
+## Estructura Rapida
 
 ```
 src/
 ├── app/
 │   ├── api/              ← Rutas API
-│   ├── auth/             ← Páginas de login
+│   ├── auth/             ← Paginas de login
 │   ├── dashboard/        ← Panel principal
 │   └── layout.tsx        ← Layout global
 ├── components/           ← Componentes React
@@ -95,15 +95,15 @@ src/
 
 ---
 
-## Comandos Útiles
+## Comandos utiles
 
 ```bash
 # Desarrollo
 npm run dev                # Inicia servidor dev
 
 # Build & Deploy
-npm run build             # Compila para producción
-npm start                 # Inicia servidor producción
+npm run build             # Compila para produccion
+npm start                 # Inicia servidor produccion
 
 # Base de datos
 npm run generate:prisma   # Genera Prisma Client
@@ -112,23 +112,23 @@ npm run db:seed           # Carga datos iniciales
 
 # Code Quality
 npm run type-check        # Verifica tipos TypeScript
-npm run lint              # Valida código
-npm run format            # Formatea código
+npm run lint              # Valida codigo
+npm run format            # Formatea codigo
 ```
 
 ---
 
-## Troubleshooting Rápido
+## Troubleshooting Rapido
 
 ### ❌ Error: "Cannot connect to database"
 
 ```bash
 # 1. Verificar DATABASE_URL en .env.local
-# 2. Verificar que SQL Server está corriendo
-# 3. Probar conexión:
+# 2. Verificar que SQL Server esta corriendo
+# 3. Probar conexion:
 npm run generate:prisma
 
-# 4. Si aún falla, revisar firewall Azure SQL
+# 4. Si aun falla, revisar firewall Azure SQL
 ```
 
 ### ❌ Error: "Port 3000 already in use"
@@ -159,18 +159,18 @@ cat prisma/seed.js
 
 ---
 
-## Próximo: Deployment
+## Proximo: Deployment
 
 Una vez funcionando localmente:
 
-### Opción 1: Vercel (Recomendado)
-1. `git push` tu código a GitHub
+### Opcion 1: Vercel (Recomendado)
+1. `git push` tu codigo a GitHub
 2. Import en https://vercel.com
 3. Configurar env vars
 4. Deploy! ✅
 
-### Opción 2: Netlify
-1. `git push` tu código a GitHub
+### Opcion 2: Netlify
+1. `git push` tu codigo a GitHub
 2. Conectar en https://netlify.com
 3. Configurar env vars
 4. Deploy! ✅
@@ -179,9 +179,9 @@ Lee [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) para detalles.
 
 ---
 
-## Próxima: Desarrollo
+## Proxima: Desarrollo
 
-### Crear nueva página
+### Crear nueva pagina
 
 ```bash
 # src/app/dashboard/colaboradores/page.tsx
@@ -244,9 +244,9 @@ export function Button({ children, onClick }: ButtonProps) {
 
 ---
 
-## Soporte Rápido
+## Soporte Rapido
 
-| Problema | Solución |
+| Problema | Solucion |
 |----------|----------|
 | BD no conecta | Ver `DATABASE_URL` en `.env.local` |
 | Build falla | `npm run type-check` para ver errores |
@@ -261,7 +261,7 @@ export function Button({ children, onClick }: ButtonProps) {
 - [ ] Crear cuenta Azure SQL
 - [ ] Deploying a Vercel/Netlify
 - [ ] Personalizar diseño con marca
-- [ ] Agregar más módulos
+- [ ] Agregar mas modulos
 - [ ] Configurar CI/CD
 
 ¡Listo para desarrollar! 🚀

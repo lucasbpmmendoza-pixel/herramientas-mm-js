@@ -88,7 +88,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     await prisma.estadistica.delete({ where: { id } });
-    return NextResponse.json({ success: true, message: "Estadística eliminada" });
+    return NextResponse.json({ success: true, message: "Estadistica eliminada" });
   } catch (error) {
     console.error("Delete estadistica error:", error);
     return NextResponse.json({ success: false, error: "Error interno del servidor" }, { status: 500 });

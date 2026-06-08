@@ -1,8 +1,8 @@
-# Guía de Deployment - Vercel y Netlify
+# Guia de Deployment - Vercel y Netlify
 
 ## Deployment Vercel
 
-### Opción 1: CLI Local
+### Opcion 1: CLI Local
 
 ```bash
 # 1. Instalar Vercel CLI
@@ -15,7 +15,7 @@ vercel login
 vercel
 ```
 
-### Opción 2: GitHub + Vercel Dashboard (Recomendado)
+### Opcion 2: GitHub + Vercel Dashboard (Recomendado)
 
 #### Paso 1: Preparar Repositorio Git
 ```bash
@@ -54,20 +54,20 @@ NEXTAUTH_SECRET = "xxx"
 JWT_SECRET = "xxx"
 ```
 
-#### Paso 4: Deploy Automático
+#### Paso 4: Deploy Automatico
 
-Cada push a `main` se desplegará automáticamente:
+Cada push a `main` se desplegara automaticamente:
 
 ```bash
 git push origin main
-# Vercel construye y despliega automáticamente
+# Vercel construye y despliega automaticamente
 ```
 
 ---
 
 ## Deployment Netlify
 
-### Opción 1: CLI Local
+### Opcion 1: CLI Local
 
 ```bash
 # 1. Instalar Netlify CLI
@@ -80,7 +80,7 @@ netlify login
 netlify deploy
 ```
 
-### Opción 2: GitHub + Netlify Dashboard (Recomendado)
+### Opcion 2: GitHub + Netlify Dashboard (Recomendado)
 
 #### Paso 1: Preparar Repositorio
 (Mismo que Vercel)
@@ -113,7 +113,7 @@ JWT_SECRET = "xxx"
 
 ---
 
-## Generación de Secrets
+## Generacion de Secrets
 
 ### Generar NEXTAUTH_SECRET y JWT_SECRET
 
@@ -131,13 +131,13 @@ Ejecutar dos veces y copiar ambos valores para:
 
 ---
 
-## Migrar Base de Datos en Producción
+## Migrar Base de Datos en Produccion
 
 ### Desde Local
 
 ```bash
 # 1. Asegurar variables de entorno locales
-# Verificar .env.local con DATABASE_URL de producción
+# Verificar .env.local con DATABASE_URL de produccion
 
 # 2. Ejecutar migraciones
 npm run db:migrate
@@ -195,8 +195,8 @@ jobs:
 
 ## SSL/HTTPS
 
-- ✅ Vercel: Automático (Let's Encrypt)
-- ✅ Netlify: Automático (Let's Encrypt)
+- ✅ Vercel: Automatico (Let's Encrypt)
+- ✅ Netlify: Automatico (Let's Encrypt)
 
 ---
 
@@ -232,7 +232,7 @@ Check logs for:
 Check:
 - Health endpoint: /api/health
 - Database connection: npm run db:migrate
-- Environment variables están configuradas
+- Environment variables estan configuradas
 - Firewall Azure SQL permite IPs de proveedor
 ```
 
@@ -241,8 +241,8 @@ Check:
 ```
 Optimizar:
 - Reducir tamaño de dependencias
-- Usar edge functions para lógica simple
-- Caché optimizado
+- Usar edge functions para logica simple
+- Cache optimizado
 - Lazy loading de componentes
 ```
 
@@ -272,7 +272,7 @@ Optimizar:
 
 ---
 
-## Próximos Pasos
+## Proximos Pasos
 
 1. ✅ Push a GitHub
 2. ✅ Conectar a Vercel/Netlify

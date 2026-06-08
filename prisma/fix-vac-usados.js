@@ -62,7 +62,7 @@ async function main() {
       console.log(`✔ ${u.firstName} ${u.lastName}: diasVacaciones=${diasVacaciones} (era ${u.diasVacaciones})`);
       updated++;
     } else {
-      console.log(`  ${u.firstName} ${u.lastName}: sin cambios (${diasVacaciones} días)`);
+      console.log(`  ${u.firstName} ${u.lastName}: sin cambios (${diasVacaciones} dias)`);
     }
   }
 

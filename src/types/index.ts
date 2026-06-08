@@ -51,7 +51,7 @@ export interface Estadistica {
   tareasRetrasadas: number;
   calificacion: number;
   mes: number;
-  año: number;
+  anio: number;
   createdAt: string;
   updatedAt: string;
 }

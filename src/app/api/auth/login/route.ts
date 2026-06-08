@@ -67,6 +67,7 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     console.error("Login error:", error);
+    console.log(error instanceof Error ? error.stack : "No stack trace available");
     return NextResponse.json(
       {
         success: false,
